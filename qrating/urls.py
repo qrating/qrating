@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.urls import path
 
 from accounts import views as accounts_views
 from blog import views
@@ -23,7 +24,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^$', views.home, name = "home"),
+    path('question/<int:pk>', views.question, name = "question"),
 
     # accounts
-    url(r'accounts/register/$', accounts_views.register, name='register'),
+    url(r'^accounts/register/$', accounts_views.register, name='register'),
 ]
