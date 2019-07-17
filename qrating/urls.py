@@ -16,6 +16,15 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from accounts import views as accounts_views
+from blog import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    url(r'^$', views.home, name = "home"),
+    url(r'^create_question/$', views.create_question, name = "create_question"),
+
+    # accounts
+    url(r'accounts/register/$', accounts_views.register, name='register'),
 ]
