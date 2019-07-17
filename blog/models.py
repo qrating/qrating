@@ -13,3 +13,12 @@ class Question(models.Model):
     content = models.TextField()
     time_created = models.DateTimeField()
     price = models.IntegerField(choices=PRICE)
+    selected = models.BooleanField(default=False)
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    author = models.TextField(default='unknown')
+    content = models.TextField()
+    time_created = models.DateTimeField()
+    selected = models.BooleanField(default=False)

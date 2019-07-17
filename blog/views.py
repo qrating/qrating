@@ -10,10 +10,8 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def home(request):
-    questions = Question.objects.all
-    return render(request, 'home.html',{'questions':questions})
-    
-def create_question(request):
+    questions = Question.objects.filter(selected = True)
+
     if request.method == 'POST':
         form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
@@ -25,5 +23,5 @@ def create_question(request):
             
     else:
         form = QuestionForm()
-            
-    return render(request, 'create_question.html', {'form':form})
+
+    return render(request, 'home.html',{'questions':questions, 'form':form})

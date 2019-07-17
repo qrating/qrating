@@ -23,7 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^$', views.home, name = "home"),
-    url(r'^create_question/$', views.create_question, name = "create_question"),
 
     # accounts
     url(r'accounts/register/$', accounts_views.register, name='register'),
