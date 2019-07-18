@@ -28,6 +28,7 @@ def home(request):
 
 def question(request, pk):
     question = get_object_or_404(Question, pk=pk)
+    
     answers = Answer.objects.filter(question = pk)
     if request.method == "POST":
         form = AnswerForm(request.POST)
