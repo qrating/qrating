@@ -18,8 +18,8 @@ def register(request):
             return redirect('home')
         
     else :
-        user_form = UserRegsiterForm(instance=request.user)
-        profile_form = ProfileRegsiterForm(instance=request.user.profile)
+        user_form = UserRegsiterForm()
+        profile_form = ProfileRegsiterForm()
     return render(request, 'register.html', {
         'user_form': user_form,
         'profile_form': profile_form
