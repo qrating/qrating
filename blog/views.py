@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def home(request):
-    questions = Question.objects.filter(selected = True)
+    questions = Question.objects.filter()
 
     if request.method == 'POST':
         form = QuestionForm(request.POST, request.FILES)
