@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 def home(request):
     questions = Question.objects.filter()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.id != None:
         form = QuestionForm(request.POST, request.FILES)
         if form.is_valid():
             question = form.save(commit = False)
