@@ -16,7 +16,7 @@
 
     <div>
         <h1>새 질문 작성</h1>
-        <form method="POST" class="post-form"> 
+        <form method="POST" class="post-form" enctype="multipart/form-data"> 
             {%csrf_token%}
             {{ form.as_p }}
             <button type="submit">올리기</button>

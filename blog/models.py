@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.utils import timezone
 from django.db import models
 
 # Create your models here.
@@ -14,6 +14,7 @@ class Question(models.Model):
     time_created = models.DateTimeField()
     price = models.IntegerField(choices=PRICE)
     selected = models.BooleanField(default=False)
+    image = models.ImageField(upload_to = 'images/', blank=True)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -22,3 +23,4 @@ class Answer(models.Model):
     content = models.TextField()
     time_created = models.DateTimeField()
     selected = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='images/',blank=True)

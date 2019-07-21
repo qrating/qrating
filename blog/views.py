@@ -31,7 +31,7 @@ def question(request, pk):
     
     answers = Answer.objects.filter(question = pk)
     if request.method == "POST":
-        form = AnswerForm(request.POST)
+        form = AnswerForm(request.POST, request.FILES)
         if form.is_valid():
             answer = form.save(commit=False)
             answer.question = question
