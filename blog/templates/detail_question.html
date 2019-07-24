@@ -1,0 +1,39 @@
+<h1>question deltails</h1>
+<a href="{% url 'home' %}">홈으로</a>
+<div>
+    <h1>질문</h1>
+    <p> {{ question.title}} </p>
+    <p> {{ question.author}} </p>
+    {% if question.image %}
+        <img src="{{ question.image.url}}" height=200>
+    {% endif %}
+    <p> {{ question.content|linebreaks}} </p>
+    <hr>
+</div>
+
+<div>
+    <h1>새 답변 작성</h1>
+    <form method="POST" class="post-form" enctype="multipart/form-data"> 
+        {%csrf_token%}
+        {{ form.as_p }}
+        <button type="submit">올리기</button>
+    </form>
+</div>
+
+<div>
+    <h1>답변 리스트</h1>
+    <div>
+        {% for answer in answers %}
+            <div>
+                {% if answer.image %}
+                    <img src="{{ answer.image.url}}" height=200>
+                {% endif %}
+                <p> {{ answer.content }} </p>
+                <p> {{ answer.author }} </p>
+                
+                <button type="submit" formmethod="POST" name="select">채택</button>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+</div>
