@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^$', views.home, name = "home"),
-    path('question/<int:pk>', views.question, name = "question"),
+    path('question/<int:pk>', views.detail_question, name = "detail_question"),
+    url(r'^create_question/$', views.create_question, name = "create_question"),
 
     # accounts
     url(r'^register/$', accounts_views.register, name='register'),

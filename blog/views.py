@@ -11,6 +11,11 @@ from django.shortcuts import get_object_or_404
 
 def home(request):
     questions = Question.objects.filter()
+    return render(request, 'home.html',{'questions':questions})
+
+
+def create_question(request):
+    questions = Question.objects.filter()
 
     if request.method == 'POST' and request.user.id != None:
         form = QuestionForm(request.POST, request.FILES)
@@ -19,17 +24,16 @@ def home(request):
             question.author = request.user
             question.time_created = timezone.now()
             question.save()
-            return redirect('home')
-            
+            return redirect('home')            
     else:
         form = QuestionForm()
 
-    return render(request, 'home.html',{'questions':questions, 'form':form})
+    return render(request, 'create_question.html',{'form':form})
 
-def question(request, pk):
-    question = get_object_or_404(Question, pk=pk)
-    
+def detail_question(request, pk):
+    question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
+
     if request.method == "POST":
         form = AnswerForm(request.POST, request.FILES)
         if form.is_valid():
@@ -38,7 +42,8 @@ def question(request, pk):
             answer.author = request.user
             answer.time_created = timezone.now()
             answer.save()
-            return redirect('question', pk=pk)
+            return redirect('detail_question', pk=pk)
+            
     elif request.method == "GET":
         form = AnswerForm()
         return render(request, "detail_question.html", {'question' : question, 'form' : form, 'answers' : answers})

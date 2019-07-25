@@ -26,3 +26,4 @@ class Answer(models.Model):
     time_created = models.DateTimeField()
     selected = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images/',blank=True)
+
