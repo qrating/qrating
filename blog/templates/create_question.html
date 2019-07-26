@@ -6,6 +6,7 @@
     <form method="POST" class="post-form" enctype="multipart/form-data"> 
         {%csrf_token%}
         {{ form.as_p }}
+        {{ image_formset.as_p }}
         <button type="submit">올리기</button>
     </form>
 </div>

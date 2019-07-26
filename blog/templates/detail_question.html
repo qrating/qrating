@@ -4,12 +4,14 @@
     <h1>질문</h1>
     <p> {{ question.title}} </p>
     <p> {{ question.author}} </p>
-    {% if question.image %}
-        <img src="{{ question.image.url}}" height=200>
-    {% endif %}
+    {% for image in question.image_set.all %}
+        <img src="{{ question.image.url }}" >
+    {% endfor %}
     <p> {{ question.content|linebreaks}} </p>
     <hr>
 </div>
+
+
 
 <div>
     <h1>새 답변 작성</h1>
