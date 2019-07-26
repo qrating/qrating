@@ -1,5 +1,5 @@
 from django import forms
-from .models import Question, Answer, Question_Image, Answer_Image
+from .models import Question, Answer, QuestionImage, AnswerImage
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -11,16 +11,16 @@ class AnswerForm(forms.ModelForm):
         model = Answer
         fields = ['content', 'selected',]
 
-class Question_ImageForm(forms.ModelForm):
+class QuestionImageForm(forms.ModelForm):
     class Meta:
-        model = Question_Image
+        model = QuestionImage
         fields = ['file',]
 
-Question_ImageFormSet = forms.inlineformset_factory(Question, Question_Image, form=Question_ImageForm, extra=3)
+QuestionImageFormSet = forms.inlineformset_factory(Question, QuestionImage, form=QuestionImageForm, extra=3)
 
-class Answer_ImageForm(forms.ModelForm):
+class AnswerImageForm(forms.ModelForm):
     class Meta:
-        model = Answer_Image
+        model = AnswerImage
         fields = ['file',]
 
-Answer_ImageFormSet = forms.inlineformset_factory(Answer, Answer_Image, form=Answer_ImageForm, extra=3)
+AnswerImageFormSet = forms.inlineformset_factory(Answer, AnswerImage, form=AnswerImageForm, extra=3)
