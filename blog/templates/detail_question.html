@@ -2,6 +2,7 @@
 <a href="{% url 'home' %}">홈으로</a>
 <div>
     <h1>질문</h1>
+    <a href="{% url 'question_remove' pk=question.pk %}">삭제</a>
     <p> {{ question.title}} </p>
     <p> {{ question.author}} </p>
     {% for image in question.image_set.all %}

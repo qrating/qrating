@@ -55,4 +55,8 @@ def detail_question(request, pk):
     elif request.method == "GET":
         form = AnswerForm()
         return render(request, "detail_question.html", {'question' : question, 'form' : form, 'answers' : answers})
-            
+
+def question_remove(request, pk):
+    question=get_object_or_404(Question, pk=pk)
+    question.delete()
+    return redirect('home')
