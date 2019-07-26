@@ -31,7 +31,7 @@ class Answer(models.Model):
     image = models.ImageField(upload_to='images/',blank=True)
 
 def Question_path_image_path(instance, filename):
-    return f'posts/{instance.post.content}/{filename}'
+    return f"posts/{instance.post.content}/{filename}"
 
 class Question_Image(models.Model):
     post = models.ForeignKey(Question, on_delete=models.CASCADE)
