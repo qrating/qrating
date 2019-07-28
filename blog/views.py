@@ -41,7 +41,7 @@ def create_question(request):
                 image_formset.save()
                 return redirect('home')
         else:
-            HttpResponse('질문 실패. 다시 시도해 보세요.')
+            return HttpResponse('질문 실패. 다시 시도해 보세요.')
 
     else:
         question_form = QuestionForm()
@@ -94,15 +94,27 @@ def question_remove(request, pk):
 
 def question_update(request, pk):
     question = get_object_or_404(Question, pk=pk)
+    profile = get_object_or_404(Profile, user = request.user)
+    coin = profile.coin
 
     if request.user != question.author:
         messages.warning(request, "권한 없음")#외않작동?
         return redirect('detail_question', pk=pk)
     
     if request.method == "POST":
-        form = QuestionForm(request.POST, instance=question)
-        if form.is_valid():
-            form.save()
+        form = QuestionForm(request.POST, instance=question)        
+        price_new = DICT_PRICE.get(int(form['price'].value()))
+        price_old = DICT_PRICE.get(question.price)
+
+        if form.is_valid() and coin >= price_new - price_old:
+            profile.coin -= price_new - price_old
+            profile.save()
+
+            question.title = form['title'].value()
+            question.content = form['content'].value()
+            question.price = form['price'].value()
+            question.save()
+            
             return redirect('detail_question', pk=pk)
     else:
         form = QuestionForm(instance=question)
