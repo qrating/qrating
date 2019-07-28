@@ -3,6 +3,7 @@
 <div>
     <h1>질문</h1>
     <a href="{% url 'question_remove' pk=question.pk %}">삭제</a>
+    <a href="{% url 'question_update' pk=question.pk %}">수정하기</a>
     <p> {{ question.title}} </p>
     <p> {{ question.author}} </p>
     {% for image in question.image_set.all %}
