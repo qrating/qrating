@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path\
+from django.urls import path
 
 from accounts import views as accounts_views
 from blog import views
@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^register/$', accounts_views.register, name='register'),
     url(r'^logout/$', accounts_views.logout, name = 'logout'),
     url(r'^login/$', accounts_views.login, name='login'),
+    path('mypage/<int:pk>', accounts_views.mypage, name='mypage'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

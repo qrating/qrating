@@ -4,7 +4,8 @@
     <div>
         <h1>회원 관리</h1>
         {% if user.is_authenticated %} 
-            <p>Welcome, {{ user.username }}!</p>
+            <p>Welcome, {{ user.username }}!</p>            
+            <a href="{% url 'mypage' user.pk %}">마이 페이지</a>
             <a href="{% url 'logout' %}">로그아웃</a>
         {% else %} 
             <p>Welcome, new user.</p>

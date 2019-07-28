@@ -4,6 +4,8 @@ from django.http import HttpResponse
 
 from .forms import UserRegsiterForm, ProfileRegsiterForm, LoginForm
 from .models import Profile
+from blog.models import Question, Answer
+from django.contrib.auth.models import User
 
 # Create your views here.
 def register(request):
@@ -48,3 +50,21 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('home')
+
+def mypage(request, pk):
+    user = User.objects.get(pk = pk)
+    print(request.user)
+    print(user)
+    if user == request.user:
+        questions = Question.objects.filter(author = user)
+        answers = Answer.objects.filter(author = user)
+        profile = Profile.objects.get(user = user)
+
+        return render(request, 'mypage.html', {
+            'user':user, 
+            'questions': questions,
+            'answers' : answers,
+            'profile' : profile,
+            })
+    else :
+        return HttpResponse('본인이 아닙니다.')

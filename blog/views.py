@@ -16,7 +16,6 @@ def home(request):
 
 @login_required
 def create_question(request):
-    #questions = Question.objects.filter()
 
     if request.method == 'POST':
         question_form = QuestionForm(request.POST, request.FILES)

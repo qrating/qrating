@@ -36,9 +36,6 @@ class QuestionImage(models.Model):
         format = 'JPEG',
         #option = {'quality':90},
     )
-    
-    def path(self, filename):
-        return f'blog/{self.question.content}/{filename}'  
 
 class AnswerImage(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
@@ -48,7 +45,3 @@ class AnswerImage(models.Model):
         format = 'JPEG',
         #option = {'quality':90},
     )
-
-    def path(self, filename):
-        #return f'posts/{instance.post.content}/{filename}'
-        return f'blog/{self.answer.content}/{filename}'
