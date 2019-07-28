@@ -20,6 +20,7 @@ def register(request):
             profile.user = user
             profile.save()
 
+            auth_login(request, user)
             return redirect('home')
         
     else :
