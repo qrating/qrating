@@ -28,6 +28,9 @@ class Answer(models.Model):
     selected = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images/',blank=True)
 
+def path(self, filename):
+    return f'blog/{self.question.content}/{filename}'  
+
 class QuestionImage(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     file = ProcessedImageField(
@@ -37,9 +40,6 @@ class QuestionImage(models.Model):
         #option = {'quality':90},
     )
     
-    def path(self, filename):
-        return f'blog/{self.question.content}/{filename}'  
-
 class AnswerImage(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     file = ProcessedImageField(
@@ -49,6 +49,6 @@ class AnswerImage(models.Model):
         #option = {'quality':90},
     )
 
-    def path(self, filename):
-        #return f'posts/{instance.post.content}/{filename}'
-        return f'blog/{self.answer.content}/{filename}'
+def path(self, filename):
+    #return f'posts/{instance.post.content}/{filename}'
+    return f'blog/{self.answer.content}/{filename}'
