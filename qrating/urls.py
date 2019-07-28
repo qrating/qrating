@@ -30,7 +30,7 @@ urlpatterns = [
     path('question/<int:pk>', views.detail_question, name = "detail_question"),
     url(r'^create_question/$', views.create_question, name = "create_question"),
     path('question/<int:pk>/remove/', views.question_remove, name='question_remove'),
-    
+    path('question/<int:pk>/update/', views.question_update, name='question_update'),
     # accounts
     url(r'^register/$', accounts_views.register, name='register'),
     url(r'^logout/$', accounts_views.logout, name = 'logout'),

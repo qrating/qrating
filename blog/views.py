@@ -8,6 +8,7 @@ from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm,
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 #from django.contrib import messages
 # Create your views here.
 
@@ -74,11 +75,27 @@ def question_remove(request, pk):
     question=get_object_or_404(Question, pk=pk)
     
     if request.user != question.author: #and not request.user.is_staff
-        #messages.warning(request, '권한 없음') 이것저것 설치해야함
+        messages.warning(request, '권한 없음')
         return redirect('detail_question', pk=pk)
     else :
         question.delete()
         return redirect('home')
+
+def question_update(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+
+    if request.user != question.author:
+        messages.warning(request, "권한 없음")#외않작동?
+        return redirect('detail_question', pk=pk)
+    
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            form.save()
+            return redirect('detail_question', pk=pk)
+    else:
+        form = QuestionForm(instance=question)
+    return render(request,'update_question.html',{'form':form})
 """
 def question_update(request, pk):
     question = get_object_or_404(Question, pk=pk)
