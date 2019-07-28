@@ -3,14 +3,14 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from .models import Question, Answer, QuestionImage, AnswerImage
-from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-#from django.contrib import messages
-# Create your views here.
+
+from .models import Question, Answer, QuestionImage, AnswerImage
+from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet
+from accounts.models import Profile
 
 def home(request):
     questions = Question.objects.filter()
@@ -38,9 +38,12 @@ def create_question(request):
         question_form = QuestionForm()
         image_formset = QuestionImageFormSet()
 
+    coin = get_object_or_404(Profile, user = request.user).coin
     return render(request, 'create_question.html',
-        {'form':question_form, 
+        {
+        'form':question_form, 
         'image_formset':image_formset,
+        'coin':coin,
     })
 
 @login_required
