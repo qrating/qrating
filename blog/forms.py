@@ -4,12 +4,12 @@ from .models import Question, Answer, QuestionImage, AnswerImage
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['title','content','price', 'selected',]
+        fields = ['title','content','price', ]
 
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
-        fields = ['content', 'selected',]
+        fields = ['content', ]
 
 class QuestionImageForm(forms.ModelForm):
     class Meta:
