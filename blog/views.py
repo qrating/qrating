@@ -24,7 +24,7 @@ def create_question(request):
     if request.method == 'POST':
         question_form = QuestionForm(request.POST, request.FILES)
         image_formset = QuestionImageFormSet(request.POST, request.FILES)
-        price = DICT_PRICE[int(question_form['price'].value())]
+        price = DICT_PRICE.get(int(question_form['price'].value()))
 
         if question_form.is_valid() and image_formset.is_valid() and profile.coin >= price:
             profile.coin -= price
