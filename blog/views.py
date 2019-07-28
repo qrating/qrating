@@ -8,7 +8,7 @@ from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Question, Answer, QuestionImage, AnswerImage
+from .models import Question, Answer, QuestionImage, AnswerImage, DICT_PRICE
 from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet
 from accounts.models import Profile
 
@@ -18,12 +18,18 @@ def home(request):
 
 @login_required
 def create_question(request):
+    profile = get_object_or_404(Profile, user = request.user)
+    coin = profile.coin
 
     if request.method == 'POST':
         question_form = QuestionForm(request.POST, request.FILES)
         image_formset = QuestionImageFormSet(request.POST, request.FILES)
+        price = DICT_PRICE[int(question_form['price'].value())]
 
-        if question_form.is_valid() and image_formset.is_valid():
+        if question_form.is_valid() and image_formset.is_valid() and profile.coin >= price:
+            profile.coin -= price
+            profile.save()
+
             question = question_form.save(commit = False)
             question.author = request.user
             question.time_created = timezone.now()
@@ -33,12 +39,15 @@ def create_question(request):
                 question.save()
                 image_formset.instance = question
                 image_formset.save()
-                return redirect('home')            
+                return redirect('home')
+        else:
+            HttpResponse('질문 실패. 다시 시도해 보세요.')
+
     else:
         question_form = QuestionForm()
         image_formset = QuestionImageFormSet()
 
-    coin = get_object_or_404(Profile, user = request.user).coin
+    
     return render(request, 'create_question.html',
         {
         'form':question_form, 

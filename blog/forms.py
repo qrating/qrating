@@ -1,5 +1,7 @@
 from django import forms
-from .models import Question, Answer, QuestionImage, AnswerImage
+from .models import Question, Answer, QuestionImage, AnswerImage, PRICE
+
+DICT_PRICE = dict(PRICE)
 
 class QuestionForm(forms.ModelForm):
     class Meta:

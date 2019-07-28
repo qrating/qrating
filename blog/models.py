@@ -8,6 +8,7 @@ from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFill
 
 PRICE = [(i,i*500+500) for i in range(10)]
+DICT_PRICE = dict(PRICE)
 
 class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -17,6 +18,7 @@ class Question(models.Model):
     time_created = models.DateTimeField()
     price = models.IntegerField(choices=PRICE)
     selected = models.BooleanField(default=False)
+
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
