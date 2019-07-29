@@ -1,0 +1,30 @@
+<h1>마이페이지</h1>
+
+<p>아이디 : {{ user.username }}</p>
+<p>이메일 : {{ user.email }}</p>
+<p>코인 : {{ profile.coin }}</p>
+
+<div>
+    <h1>나의 질문 리스트</h1>
+    {% for question in questions %}
+        <div>
+            <p> {{ question.title}} </p>
+            <p> {{ question.author}} </p>
+            <p> {{ question.body|linebreaks}} </p>
+            <a href="{% url 'detail_question' question.pk %}">질문보기</a>
+            <hr>
+        </div>
+    {% endfor %}
+</div>
+
+<div>
+    <h1>나의 답변 리스트</h1>
+    {% for answer in answers %}
+        <div>
+            <p> {{ answer.title}} </p>
+            <p> {{ answer.author}} </p>
+            <p> {{ answer.content}} </p>
+            <hr>
+        </div>
+    {% endfor %}
+</div>

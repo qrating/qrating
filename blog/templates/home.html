@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>   
         <head>
                 <!-- Required meta tags -->
@@ -69,3 +70,41 @@
     </body>
 
 </html>
+=======
+<html>    
+    <h1>home</h1><br>
+
+    <div>
+        <h1>회원 관리</h1>
+        {% if user.is_authenticated %} 
+            <p>Welcome, {{ user.username }}!</p>            
+            <a href="{% url 'mypage' user.pk %}">마이 페이지</a>
+            <a href="{% url 'logout' %}">로그아웃</a>
+        {% else %} 
+            <p>Welcome, new user.</p>
+            <a href="{% url 'login' %}">로그인</a>
+            <a href="{% url 'register' %}">회원 가입</a>
+        {% endif %}
+    </div>    
+    
+
+    <div>
+        <a href="{% url 'create_question' %}">새 질문</a>
+    </div>
+
+
+    <div>
+        <h1>질문 리스트</h1>
+        {% for question in questions %}
+            <div>
+                <p> {{ question.title}} </p>
+                <p> {{ question.author}} </p>
+                <p> {{ question.body|linebreaks}} </p>
+                <a href="{% url 'detail_question' question.pk %}">질문보기</a>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+
+</html>
+>>>>>>> 165416ab9864a7b926f893be0ced3ed324ce35cb

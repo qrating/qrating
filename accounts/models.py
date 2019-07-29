@@ -4,5 +4,4 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    coin = models.IntegerField(default=0)
-    email = models.EmailField()
+    coin = models.IntegerField(default=5000)

@@ -4,9 +4,11 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+from imagekit.models import ProcessedImageField, ImageSpecField
+from imagekit.processors import ResizeToFill
 
 PRICE = [(i,i*500+500) for i in range(10)]
+DICT_PRICE = dict(PRICE)
 
 class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -16,7 +18,7 @@ class Question(models.Model):
     time_created = models.DateTimeField()
     price = models.IntegerField(choices=PRICE)
     selected = models.BooleanField(default=False)
-    image = models.ImageField(upload_to = 'images/', blank=True)
+
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,4 +27,21 @@ class Answer(models.Model):
     content = models.TextField()
     time_created = models.DateTimeField()
     selected = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='images/',blank=True)
+
+class QuestionImage(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    file = ProcessedImageField(
+        upload_to = 'images/',
+        processors = [ResizeToFill(600,600)],
+        format = 'JPEG',
+        #option = {'quality':90},
+    )
+
+class AnswerImage(models.Model):
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    file = ProcessedImageField(
+        upload_to = 'images/',
+        processors = [ResizeToFill(600,600)],
+        format = 'JPEG',
+        #option = {'quality':90},
+    )

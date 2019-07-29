@@ -2,20 +2,25 @@
 <a href="{% url 'home' %}">홈으로</a>
 <div>
     <h1>질문</h1>
+    <a href="{% url 'question_remove' pk=question.pk %}">삭제</a>
+    <a href="{% url 'question_update' pk=question.pk %}">수정하기</a>
     <p> {{ question.title}} </p>
     <p> {{ question.author}} </p>
-    {% if question.image %}
-        <img src="{{ question.image.url}}" height=200>
-    {% endif %}
+    {% for image in question.image_set.all %}
+        <img src="{{ question.image.url }}" >
+    {% endfor %}
     <p> {{ question.content|linebreaks}} </p>
     <hr>
 </div>
 
+
+
 <div>
     <h1>새 답변 작성</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data"> 
-        {%csrf_token%}
+        {% csrf_token %}
         {{ form.as_p }}
+        {{ image_formset.as_p }}
         <button type="submit">올리기</button>
     </form>
 </div>
