@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponse
 
 from .models import Question, Answer, QuestionImage, AnswerImage, DICT_PRICE
 from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet
@@ -119,6 +120,25 @@ def question_update(request, pk):
     else:
         form = QuestionForm(instance=question)
     return render(request,'update_question.html',{'form':form})
+
+def select_question(request, qpk, apk):
+    question = get_object_or_404(Question, pk=qpk)    
+    answer = get_object_or_404(Answer, pk=apk)
+    profile_answer = get_object_or_404(Profile, user=answer.author)
+
+    if request.user != question.author or question.selected :
+        return HttpResponse('잘못된 요청입니다.')
+    else :
+        question.selected = True
+        answer.selected = True
+        profile_answer.coin += DICT_PRICE[question.price]
+        question.save()
+        answer.save()
+        profile_answer.save()
+
+        return redirect('detail_question', pk=qpk)
+
+
 """
 def question_update(request, pk):
     question = get_object_or_404(Question, pk=pk)
