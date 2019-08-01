@@ -61,6 +61,9 @@ def detail_question(request, pk):
     question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
 
+    
+
+
     if request.method == "POST":
         answer_form = AnswerForm(request.POST)#, request.FILES)
         image_formset = AnswerImageFormSet(request.POST, request.FILES)
@@ -87,8 +90,9 @@ def question_remove(request, pk):
     question=get_object_or_404(Question, pk=pk)
     
     if request.user != question.author: #and not request.user.is_staff
-        messages.warning(request, '권한 없음')
-        return redirect('detail_question', pk=pk)
+        #messages.warning(request, '권한 없음')
+        #return redirect('detail_question', pk=pk)
+        return HttpResponse('권한 없음')
     else :
         question.delete()
         return redirect('home')
@@ -99,8 +103,9 @@ def question_update(request, pk):
     coin = profile.coin
 
     if request.user != question.author:
-        messages.warning(request, "권한 없음")#외않작동?
-        return redirect('detail_question', pk=pk)
+        #messages.warning(request, "권한 없음")#외않작동?
+        #return redirect('detail_question', pk=pk)
+        return HttpResponse('권한 없음')
     
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)        
