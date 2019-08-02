@@ -144,25 +144,32 @@ def select_question(request, qpk, apk):
         return redirect('detail_question', pk=qpk)
 
 
-"""
-def question_update(request, pk):
-    question = get_object_or_404(Question, pk=pk)
+def answer_update(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    question = get_object_or_404(Question, pk=answer.question.id)
 
-    if request.user != question.author:
-        #messages.warning(request, '권한 없음') 이것저것 설치해야함
-        return redirect('detail_question')
+    if request.user != answer.author:
+        return HttpResponse('권한 없음')
+
     if request.method == "POST":
-        form = QuestionForm(request.POST, instance = question)
+        form = AnswerForm(request.POST, instance=answer)
         if form.is_vaild():
             form.save()
             return redirect(question)
     else:
-        form = QuestionForm(instance=question)
-    return render(request, 'detail_question.html', {'form':form})
-
+        form = AnswerForm(instance = answer)
+    return render(request, 'detail_question.html',{'form':form})
 
 def answer_remove(request, pk):
-    answer=get_object_or_404(Answer, pk=pk)
-    answer.delete()
-    return redirect('detail_question')
-"""
+
+    answer = get_object_or_404(Answer, pk=pk)
+    question = get_object_or_404(Question, pk=answer.question.id)
+
+    if request.user != answer.author:
+        return HttpResponse('권한 없음')
+
+    if request.method == "POST":
+        answer.delete()
+        return redirect(question)
+    else:
+        return render(request, 'detail_question.html', {'answer':answer})

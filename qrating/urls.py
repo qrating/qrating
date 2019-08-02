@@ -32,6 +32,7 @@ urlpatterns = [
     path('question/<int:pk>/remove/', views.question_remove, name='question_remove'),
     path('question/<int:pk>/update/', views.question_update, name='question_update'),
     path('select/<int:qpk>/<int:apk>', views.select_question, name='select_question'),
+    path('question/<int:pk>/answer_remove/',views.answer_remove, name="answer_remove"),
 
     # accounts
     url(r'^register/$', accounts_views.register, name='register'),
