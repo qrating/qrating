@@ -56,7 +56,7 @@ def create_question(request):
         'coin':coin,
     })
 
-@login_required
+#@login_required
 def detail_question(request, pk):
     question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
@@ -146,36 +146,15 @@ def answer_remove(request, qpk,apk):
     answer.delete()
     return redirect('detail_question',pk=qpk)
     
+def answer_update(request, qpk, apk):
+    answer = get_object_or_404(Answer, pk=apk)
+    question = get_object_or_404(Question, pk=qpk)
     
-    """
-    context={'question':question,}
-    content=request.POST.get('content')
-
-    conn_user = request.user
-    conn_profile = Profile.objects.get(user=conn_user)
-
-    if conn_profile != answer.comment_writer:
-        return HttpResponse('권한 없음')
-    answer.delete()
-    return render(request,'detail_question', context=context)
-    """
-
-    
-"""
-def answer_update(request, pk):
-    #answer = get_object_or_404(Answer, pk=pk)
-    question = get_object_or_404(Question, pk=pk)
-    
-
-    if request.user != answer.author:
-        return HttpResponse('권한 없음')
-
     if request.method == "POST":
         form = AnswerForm(request.POST, instance=answer)
-        if form.is_vaild():
+        if form.is_valid():
             form.save()
-            return redirect(question)
+            return redirect('detail_question', pk=qpk)
     else:
         form = AnswerForm(instance = answer)
     return render(request, 'detail_question.html',{'form':form})
-"""
