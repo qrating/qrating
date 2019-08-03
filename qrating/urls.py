@@ -40,5 +40,6 @@ urlpatterns = [
     url(r'^logout/$', accounts_views.logout, name = 'logout'),
     url(r'^login/$', accounts_views.login, name='login'),
     path('mypage/<int:pk>', accounts_views.mypage, name='mypage'),
+    path('change_pw/<int:pk>', accounts_views.change_pw, name='change_pw'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
