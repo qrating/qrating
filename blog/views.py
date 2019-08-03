@@ -61,9 +61,6 @@ def detail_question(request, pk):
     question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
 
-    
-
-
     if request.method == "POST":
         answer_form = AnswerForm(request.POST)#, request.FILES)
         image_formset = AnswerImageFormSet(request.POST, request.FILES)
@@ -143,10 +140,32 @@ def select_question(request, qpk, apk):
 
         return redirect('detail_question', pk=qpk)
 
+def answer_remove(request, qpk,apk):
+    answer = get_object_or_404(Answer, pk=apk)
+    question = get_object_or_404(Question, pk=qpk)
+    answer.delete()
+    return redirect('detail_question',pk=qpk)
+    
+    
+    """
+    context={'question':question,}
+    content=request.POST.get('content')
 
+    conn_user = request.user
+    conn_profile = Profile.objects.get(user=conn_user)
+
+    if conn_profile != answer.comment_writer:
+        return HttpResponse('권한 없음')
+    answer.delete()
+    return render(request,'detail_question', context=context)
+    """
+
+    
+"""
 def answer_update(request, pk):
-    answer = get_object_or_404(Answer, pk=pk)
-    question = get_object_or_404(Question, pk=answer.question.id)
+    #answer = get_object_or_404(Answer, pk=pk)
+    question = get_object_or_404(Question, pk=pk)
+    
 
     if request.user != answer.author:
         return HttpResponse('권한 없음')
@@ -159,17 +178,4 @@ def answer_update(request, pk):
     else:
         form = AnswerForm(instance = answer)
     return render(request, 'detail_question.html',{'form':form})
-
-def answer_remove(request, pk):
-
-    answer = get_object_or_404(Answer, pk=pk)
-    question = get_object_or_404(Question, pk=answer.question.id)
-
-    if request.user != answer.author:
-        return HttpResponse('권한 없음')
-
-    if request.method == "POST":
-        answer.delete()
-        return redirect(question)
-    else:
-        return render(request, 'detail_question.html', {'answer':answer})
+"""

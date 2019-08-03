@@ -37,7 +37,7 @@
                 <p> {{ answer.author }} </p>
                 
                 {% if user == answer.author %}
-                    <a href="{% url 'answer_remove' answer.pk %}">삭제하기</a>
+                    <a href="{% url 'answer_remove' question.pk answer.pk %}">삭제하기</a>
                 {% endif %}
                 
                 {% if user == question.author and question.selected == False %}
