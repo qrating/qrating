@@ -17,8 +17,10 @@ def home(request):
     questions = Question.objects.filter()
     return render(request, 'home.html',{'questions':questions})
 
-@login_required
 def create_question(request):
+    if request.user.is_active == False:
+        return HttpResponse('로그인 또는 회원가입 후에 질문해 주세요.')
+
     profile = get_object_or_404(Profile, user = request.user)
     coin = profile.coin
 
