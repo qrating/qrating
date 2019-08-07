@@ -160,3 +160,11 @@ def answer_update(request, qpk, apk):
     else:
         form = AnswerForm(instance = answer)
     return render(request, 'detail_question.html',{'form':form})
+
+def search(request):
+    search_text = request.GET.get('search', 'none')
+    print(search_text)
+
+    return render(request, 'search.html', {
+        'questions' : Question.objects.filter(title__icontains = search_text)
+    })
