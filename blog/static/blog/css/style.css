@@ -8,4 +8,26 @@ button.navbar-toggler:focus{
 
 .total{
     display: flex;
+    justify-content: center;
+}
+
+.left{
+    background-color : gray;
+    width : 230px;
+    height : 700px;
+    margin-right: 20px;
+    
+
+}
+.right{
+    background-color : gray;
+    width : 300px;
+    height : 700px;
+    
+}
+.middle{
+    background-color : white;
+    height : 700px;
+    width : 700px;
+    margin-right: 20px;
 }
