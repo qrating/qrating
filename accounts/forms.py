@@ -8,10 +8,10 @@ class UserRegsiterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1','password2']
         widgets = {
-            'username': forms.TextInput(attrs={'max_length':'15', 'class': 'form-control', 'placeholder':'15자 이내로 입력 가능합니다.'}),
+            'username': forms.TextInput(attrs={'maxlength':'15', 'class': 'form-control', 'placeholder':'15자 이내로 입력 가능합니다.'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'password1' : forms.PasswordInput(attrs={'class': 'form-control'}),
-            'password2' : forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password1' : forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'})),
+            'password2' : forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'})),
         }
         labels = {
             'username': '아이디',
@@ -20,6 +20,10 @@ class UserRegsiterForm(UserCreationForm):
             'password2': '패스워드 확인',
             
         }
+        def __init__(self, *args, **kwargs):
+            super(UserRegisterForm, self).__init__( *args, **kwargs)
+            self.fields['username'].widget.attrs['maxlength'] = 15
+
     
 class ProfileRegsiterForm(forms.ModelForm):
     class Meta:
