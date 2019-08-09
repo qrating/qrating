@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"></script>
+
 <div class="total">
     <div class="left">
         <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">모두보기</a>
-        <a href="#" class="list-group-item list-group-item-action">경제학</a>
-        <a href="#" class="list-group-item list-group-item-action">프로그래밍</a>
-        <a href="#" class="list-group-item list-group-item-action">수학</a>
-        <a href="#" class="list-group-item list-group-item-action">경영학</a>
-        <a href="#" class="list-group-item list-group-item-action">CPA/고시</a>
-        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">기타</a>
-        </div>
+            <ul id = "menu">
+        <li><a href="#" class="list-group-item list-group-item-action text-light">모두보기</a></li>
+        <li><a href="#" class="list-group-item list-group-item-action text-light">경제학</a></li>
+        <li><a href="#" class="list-group-item list-group-item-action text-light">프로그래밍</a></li>
+        <li><a href="#" class="list-group-item list-group-item-action text-light">수학</a></li>
+        <li><a href="#" class="list-group-item list-group-item-action text-light">경영학</a></li>
+        <li><a href="#" class="list-group-item list-group-item-action text-light">CPA/고시</a></li>
+        <li><a href="#" class="list-group-item list-group-item-action text-light">기타</a></li>
+        </ul>    
+    </div>
     </div>
     <div class="middle">
         <h1>채택된 질문 리스트</h1>
