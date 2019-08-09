@@ -20,11 +20,10 @@ class UserRegsiterForm(UserCreationForm):
             'password2': '패스워드 확인',
         }
     
-
 class ProfileRegsiterForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = []
+        fields = ['nickname']
 
 class LoginForm(AuthenticationForm):
     class Meta:
