@@ -1,7 +1,46 @@
-<h1>Sign Up Page</h1>
+{% extends 'accountsbase.html' %}
+
+<!--<h1>Sign Up Page</h1>
 <form method="POST">
     {% csrf_token %}
     {{user_form.as_p}}
     {{profile_form.as_p}}
     <button type="submit">Sign Up</button>
+</form>-->
+
+{% block content %}
+<head>
+    <style>
+        .form-group:{
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }   
+    </style>
+</head>
+<body class="text-center">
+{% if user.is_authenticated %}
+<script type="text/javascript">
+  alert('잘못된 접근입니다. \n회원가입을 위해서는 로그아웃이 필요합니다.')
+  window.location.href = '/';
+</script>
+{% else %}
+<form method="POST" action="" class="sign-up-form">
+  {%csrf_token%}
+  <h2 class="sub-title"> 회원가입 </h2>
+  {% for field in user_form %}
+      <div class="form-group">
+        {{ field.label }}
+        {{field}}
+      </div>
+  {% endfor %}
+  {{profile_form.as_p}}
+  <button type="submit" class="save btn btn-success">회원가입</button>
+  <a href="{% url 'home' %}">
+    <button type="button" class="btn btn-danger">취소</button>
+  </a>
 </form>
+{% endif %}
+</body>
+{% endblock %}
