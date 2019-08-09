@@ -26,7 +26,9 @@
             <p> {{ question.title }} </p>
             <p> {{ question.author }} </p>
             <p> {{ question.body|linebreaks }} </p>
+            <div style='text-align: left'>
             <a href="{% url 'detail_question' question.pk %}">질문보기</a>
+        </div>
             <hr>
         </div>
         {% endfor %}
