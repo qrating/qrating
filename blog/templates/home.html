@@ -19,16 +19,20 @@
     </div>
     </div>
     <div class="middle">
+        <div class='text-center'>
         <h1>채택된 질문 리스트</h1>
         {% for question in questions %}
         <div>
             <p> {{ question.title }} </p>
             <p> {{ question.author }} </p>
             <p> {{ question.body|linebreaks }} </p>
+            <div style='text-align: left'>
             <a href="{% url 'detail_question' question.pk %}">질문보기</a>
+        </div>
             <hr>
         </div>
         {% endfor %}
+    </div>
     </div>
     <div class="right">
         <h1>

@@ -22,7 +22,12 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['content', ]
-
+        widgets={
+            'content': forms.Textarea(attrs={'class':'form-control', 'placeholder':'답변을 입력하세요'}),
+        }
+        labels={
+            'content':'내용',
+        }
 class QuestionImageForm(forms.ModelForm):
     class Meta:
         model = QuestionImage
@@ -40,6 +45,12 @@ class AnswerImageForm(forms.ModelForm):
     class Meta:
         model = AnswerImage
         fields = ['file',]
+        widgets={
+            'file':forms.FileInput(attrs={'class':'fileclass'}),
+        }
+        labels={
+            'file': '이미지 파일',
+        }
 
 AnswerImageFormSet = forms.inlineformset_factory(Answer, AnswerImage, form=AnswerImageForm, extra=3)
 
