@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <div>
     <h1>검색된 질문 리스트</h1>
     {% for question in questions %}
@@ -10,3 +13,4 @@
         </div>
     {% endfor %}
 </div>
+{% endblock %}

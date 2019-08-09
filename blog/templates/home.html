@@ -2,12 +2,9 @@
 
 {% block content %}
 <div class="">
-    <h1>새 질문 작성</h1>
-    <form method="POST" class="post-form" enctype="multipart/form-data"> 
-        {%csrf_token%}
-        {{ form.as_p }}
-        <a href="{% url 'create_question' %}">질문올리기</a>
-    </form>
+    <h1>
+        <a href="{% url 'create_question' %}">새 질문 작성</a>
+    </h1>
 </div>
 
 
