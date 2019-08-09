@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 
-from .models import Question, Answer, QuestionImage, AnswerImage, DICT_PRICE
-from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet
+from .models import Question, Answer, QuestionImage, AnswerImage, DICT_PRICE, Tag
+from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet, TagForm
 from accounts.models import Profile
 
 def home(request):
@@ -26,7 +26,8 @@ def create_question(request):
     
 
     if request.method == 'POST':
-        question_form = QuestionForm(request.POST, request.FILES)
+        question_form = QuestionForm(request.POST)
+        tag_form = TagForm(request.POST)
         image_formset = QuestionImageFormSet(request.POST, request.FILES)
         price = DICT_PRICE.get(int(question_form['price'].value()))
 
@@ -37,12 +38,26 @@ def create_question(request):
             question = question_form.save(commit = False)
             question.author = request.user
             question.time_created = timezone.now()
-           
+
             # from django.db import transaction
             with transaction.atomic():
                 question.save()
+
+                if tag_form.is_valid():
+                    for tag_name in tag_form['string'].value().replace(',', ' ').split():
+                        
+                        try:
+                            tag = Tag.objects.get(name = tag_name)
+                        except Tag.DoesNotExist:
+                            tag = Tag(name = tag_name, num = 0)
+    
+                        tag.num += 1
+                        tag.save()
+                        question.tags.add(tag)                
+
                 image_formset.instance = question
-                image_formset.save()
+                image_formset.save()               
+
                 return redirect('home')
         else:
             return HttpResponse('질문 실패. 다시 시도해 보세요.')
@@ -50,6 +65,7 @@ def create_question(request):
     else:
         question_form = QuestionForm()
         image_formset = QuestionImageFormSet()
+        tag_form = TagForm()
 
     
     return render(request, 'create_question.html',
@@ -57,6 +73,7 @@ def create_question(request):
         'form':question_form, 
         'image_formset':image_formset,
         'coin':coin,
+        'tag_form' : tag_form,
     })
 
 #@login_required
