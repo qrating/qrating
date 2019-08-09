@@ -35,7 +35,12 @@
         {{field}}
       </div>
   {% endfor %}
-  {{profile_form.as_p}}
+  {% for field in profile_form %}
+  <div class="form-group">
+  {{ field.label }}
+  {{field}}
+</div>
+{% endfor %}
   <button type="submit" class="save btn btn-success">회원가입</button>
   <a href="{% url 'home' %}">
     <button type="button" class="btn btn-danger">취소</button>
