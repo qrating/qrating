@@ -5,9 +5,7 @@ button.navbar-toggler:focus{
 .navbar-dark .navbar-toggler{
     border: none;
 }
-.header{
-    background-color: blue;
-}
+
 .total{
     display: flex;
     justify-content: center;
