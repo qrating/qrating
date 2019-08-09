@@ -7,7 +7,8 @@
     <a href="{% url 'question_remove' pk=question.pk %}">삭제하기</a>
     {% endif %}
     <p> {{ question.title }} </p>
-    <p> {{ question.author }} </p>
+    <!--<p> {{ question.author }} </p>-->
+    <p> {{ question_nickname }}</p>
     {% for image in question.image_set.all %}
         <img src="{{ question.image.url }}" >
     {% endfor %}
@@ -30,7 +31,7 @@
 <div>
     <h1>답변 리스트</h1>
     <div>
-        {% for answer in answers %}
+        {% for answer, profile in zip(answers, answers_profile) %}
             <div>
                 <!--
                 {% if answer.image %}
@@ -39,6 +40,7 @@
                 -->
                 <p> {{ answer.content }} </p>
                 <p> {{ answer.author }} </p>
+                <p>{{ profile.nickname }}</p>
                 {% if user == answer.author %}
                     <a href="{% url 'answer_update' question.pk answer.pk %}">수정하기</a>
                 {% endif %}

@@ -6,12 +6,12 @@ from .models import Profile
 class UserRegsiterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1','password2']
+        fields = ['username', 'email', 'password1','password2' ,]
 
 class ProfileRegsiterForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = []
+        fields = ['nickname']
 
 class LoginForm(AuthenticationForm):
     class Meta:

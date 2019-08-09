@@ -23,6 +23,7 @@ def create_question(request):
 
     profile = get_object_or_404(Profile, user = request.user)
     coin = profile.coin
+    
 
     if request.method == 'POST':
         question_form = QuestionForm(request.POST, request.FILES)
@@ -63,6 +64,11 @@ def detail_question(request, pk):
     question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
 
+    question_profile = get_object_or_404(Profile, user = question.author)
+    question_nickname = question_profile.nickname
+
+    answers_profile = [get_object_or_404(Profile, user = answers.author) for answer in answers]
+
     if request.method == "POST":
         answer_form = AnswerForm(request.POST)#, request.FILES)
         image_formset = AnswerImageFormSet(request.POST, request.FILES)
@@ -83,6 +89,8 @@ def detail_question(request, pk):
             'form' : answer_form, 
             'answers' : answers, 
             'image_formset':image_formset,
+            'question_nickname':question_nickname,
+            'answers_profile':answers_profile,
         })
 
 def question_remove(request, pk):
