@@ -11,18 +11,22 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 # -*- coding: utf-8 -*-
 import os
+import json
+
+with open("secrets.json") as f:
+    secrets = json.loads(f.read())
+
 # qrating
 # hi
 # hi!
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '69$z*3_x16c!^17gk8+u2)c$j%i3&l!v*ytcy*6tug$2gusf)o'
+SECRET_KEY = secrets['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -109,13 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Seoul'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -126,3 +126,17 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+# 메일을 호스트하는 서버
+EMAIL_PORT = 587
+# gmail과의 통신하는 포트
+EMAIL_HOST_USER = 'qjrmsktso2@likelion.org'
+# 발신할 이메일
+EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
+# 발신할 메일의 비밀번호
+EMAIL_USE_TLS = True
+# TLS 보안 방법
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# 사이트와 관련한 자동응답을 받을 이메일 주소,'webmaster@localhost'

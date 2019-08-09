@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, authenticate as auth_authenticate, logout as auth_logout
 from django.http import HttpResponse
 
@@ -8,6 +8,13 @@ from blog.models import Question, Answer
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes, force_text
+
 # Create your views here.
 def register(request):
     if request.method == 'POST':
@@ -15,14 +22,18 @@ def register(request):
         profile_form = ProfileRegsiterForm(data = request.POST)
         
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
+            user = user_form.save(commit=False)
+            #user.is_active = False
+            #주석을 해제할 경우, 회원가입 시 이메일 인증이 필요하다.
+            #개발할때 불편할 것 같아 우선 주석처리함
+            user.save()
 
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
 
             auth_login(request, user)
-            return redirect('home')
+            return redirect('send_email', user.pk)
         
     else :
         user_form = UserRegsiterForm()
@@ -32,6 +43,35 @@ def register(request):
         'profile_form': profile_form
     })
 
+def send_email(request, pk):
+    user = get_object_or_404(User, pk = pk)
+
+    message = render_to_string('activate_email.html',
+    {
+        'user': user,
+        'domain': '127.0.0.1:8000',
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
+        'token': account_activation_token.make_token(user),
+    })
+    
+    mail_subject = "[SOT] 회원가입 인증 메일입니다."
+    email = EmailMessage(mail_subject, message, to=[user.email])
+    email.send()
+
+    return render(request, 'activating.html')
+        
+def activate(request, uid64, token):
+
+    uid = force_text(urlsafe_base64_decode(uid64))
+    user = User.objects.get(pk=uid)
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth_login(request, user)
+        return redirect('home')
+    else:
+        return HttpResponse('비정상적인 접근입니다.')
 
 # Create your views here.
 def login(request):
