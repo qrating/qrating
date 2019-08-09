@@ -1,0 +1,14 @@
+<h1>create a question</h1>
+<a href="{% url 'home' %}">홈으로</a>
+
+<div>
+    <h1>새 답변 작성</h1>
+    <form method="POST" class="post-form" enctype="multipart/form-data"> 
+        {%csrf_token%}
+        {{ form.as_p }}
+        <p> 현제 코인 : {{ coin }}</p>
+        {{ image_formset.as_p }}
+        <button type="submit">올리기</button>
+    </form>
+</div>
+
