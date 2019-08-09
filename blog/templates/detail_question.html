@@ -2,10 +2,12 @@
 <a href="{% url 'home' %}">홈으로</a>
 <div>
     <h1>질문</h1>
-    <a href="{% url 'question_remove' pk=question.pk %}">삭제</a>
+    {% if user == question.author %}
     <a href="{% url 'question_update' pk=question.pk %}">수정하기</a>
-    <p> {{ question.title}} </p>
-    <p> {{ question.author}} </p>
+    <a href="{% url 'question_remove' pk=question.pk %}">삭제하기</a>
+    {% endif %}
+    <p> {{ question.title }} </p>
+    <p> {{ question.author }} </p>
     {% for image in question.image_set.all %}
         <img src="{{ question.image.url }}" >
     {% endfor %}
@@ -30,13 +32,23 @@
     <div>
         {% for answer in answers %}
             <div>
+                <!--
                 {% if answer.image %}
                     <img src="{{ answer.image.url}}" height=200>
                 {% endif %}
+                -->
                 <p> {{ answer.content }} </p>
                 <p> {{ answer.author }} </p>
+                {% if user == answer.author %}
+                    <a href="{% url 'answer_update' question.pk answer.pk %}">수정하기</a>
+                {% endif %}
+                {% if user == answer.author %}
+                    <a href="{% url 'answer_remove' question.pk answer.pk %}">삭제하기</a>
+                {% endif %}
                 
-                <button type="submit" formmethod="POST" name="select">채택</button>
+                {% if user == question.author and question.selected == False %}
+                    <a href="{% url 'select_question' question.pk answer.pk %}">채택하기</a>
+                {% endif %}
                 <hr>
             </div>
         {% endfor %}

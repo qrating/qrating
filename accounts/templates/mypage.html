@@ -4,6 +4,8 @@
 <p>이메일 : {{ user.email }}</p>
 <p>코인 : {{ profile.coin }}</p>
 
+<a href="{% url 'change_pw' user.pk %}">비밀번호 변경</a>
+
 <div>
     <h1>나의 질문 리스트</h1>
     {% for question in questions %}

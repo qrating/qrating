@@ -2,7 +2,7 @@
 <a href="{% url 'home' %}">홈으로</a>
 
 <div>
-    <h1>새 답변 작성</h1>
+    <h1>새 질문 작성</h1>
     <form method="POST" class="post-form" enctype="multipart/form-data"> 
         {%csrf_token%}
         {{ form.as_p }}
