@@ -32,11 +32,16 @@ urlpatterns = [
     path('question/<int:pk>/remove/', views.question_remove, name='question_remove'),
     path('question/<int:pk>/update/', views.question_update, name='question_update'),
     path('select/<int:qpk>/<int:apk>', views.select_question, name='select_question'),
+    path('answer_remove/<int:qpk>/<int:apk>',views.answer_remove, name='answer_remove'),
+    path('answer_update/<int:qpk>/<int:apk>',views.answer_update, name='answer_update'),
+
+    path('search', views.search, name='search'),
 
     # accounts
     url(r'^register/$', accounts_views.register, name='register'),
     url(r'^logout/$', accounts_views.logout, name = 'logout'),
     url(r'^login/$', accounts_views.login, name='login'),
     path('mypage/<int:pk>', accounts_views.mypage, name='mypage'),
+    path('change_pw/<int:pk>', accounts_views.change_pw, name='change_pw'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

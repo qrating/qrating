@@ -17,10 +17,13 @@ def home(request):
     questions = Question.objects.filter()
     return render(request, 'home.html',{'questions':questions})
 
-@login_required
 def create_question(request):
+    if request.user.is_active == False:
+        return HttpResponse('로그인 또는 회원가입 후에 질문해 주세요.')
+
     profile = get_object_or_404(Profile, user = request.user)
     coin = profile.coin
+    
 
     if request.method == 'POST':
         question_form = QuestionForm(request.POST, request.FILES)
@@ -56,10 +59,13 @@ def create_question(request):
         'coin':coin,
     })
 
-@login_required
+#@login_required
 def detail_question(request, pk):
     question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
+
+    question_profile = get_object_or_404(Profile, user = question.author)
+    answers_profile = [get_object_or_404(Profile, user = answer.author) for answer in answers]
 
     if request.method == "POST":
         answer_form = AnswerForm(request.POST)#, request.FILES)
@@ -76,19 +82,23 @@ def detail_question(request, pk):
     elif request.method == "GET":
         answer_form = AnswerForm()
         image_formset = AnswerImageFormSet()
+
         return render(request, "detail_question.html", 
-            {'question' : question, 
-            'form' : answer_form, 
-            'answers' : answers, 
-            'image_formset':image_formset,
+            {
+                'question' : question, 
+                'form' : answer_form, 
+                'image_formset':image_formset,
+                'question_profile' : question_profile,
+                'answers_profile':zip(answers, answers_profile),
         })
 
 def question_remove(request, pk):
     question=get_object_or_404(Question, pk=pk)
     
     if request.user != question.author: #and not request.user.is_staff
-        messages.warning(request, '권한 없음')
-        return redirect('detail_question', pk=pk)
+        #messages.warning(request, '권한 없음')
+        #return redirect('detail_question', pk=pk)
+        return HttpResponse('권한 없음')
     else :
         question.delete()
         return redirect('home')
@@ -99,8 +109,9 @@ def question_update(request, pk):
     coin = profile.coin
 
     if request.user != question.author:
-        messages.warning(request, "권한 없음")#외않작동?
-        return redirect('detail_question', pk=pk)
+        #messages.warning(request, "권한 없음")#외않작동?
+        #return redirect('detail_question', pk=pk)
+        return HttpResponse('권한 없음')
     
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)        
@@ -138,26 +149,29 @@ def select_question(request, qpk, apk):
 
         return redirect('detail_question', pk=qpk)
 
-
-"""
-def question_update(request, pk):
-    question = get_object_or_404(Question, pk=pk)
-
-    if request.user != question.author:
-        #messages.warning(request, '권한 없음') 이것저것 설치해야함
-        return redirect('detail_question')
-    if request.method == "POST":
-        form = QuestionForm(request.POST, instance = question)
-        if form.is_vaild():
-            form.save()
-            return redirect(question)
-    else:
-        form = QuestionForm(instance=question)
-    return render(request, 'detail_question.html', {'form':form})
-
-
-def answer_remove(request, pk):
-    answer=get_object_or_404(Answer, pk=pk)
+def answer_remove(request, qpk,apk):
+    answer = get_object_or_404(Answer, pk=apk)
+    question = get_object_or_404(Question, pk=qpk)
     answer.delete()
-    return redirect('detail_question')
-"""
+    return redirect('detail_question',pk=qpk)
+    
+def answer_update(request, qpk, apk):
+    answer = get_object_or_404(Answer, pk=apk)
+    question = get_object_or_404(Question, pk=qpk)
+    
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            form.save()
+            return redirect('detail_question', pk=qpk)
+    else:
+        form = AnswerForm(instance = answer)
+    return render(request, 'detail_question.html',{'form':form})
+
+def search(request):
+    search_text = request.GET.get('search', 'none')
+    print(search_text)
+
+    return render(request, 'search.html', {
+        'questions' : Question.objects.filter(title__icontains = search_text)
+    })
