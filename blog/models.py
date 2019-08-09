@@ -7,9 +7,6 @@ from django.contrib.auth.models import User
 from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFill
 
-from taggit.managers import TaggableManager
-from taggit.models import TagBase, TaggedItemBase
-
 PRICE = [(i,i*500+500) for i in range(10)]
 DICT_PRICE = dict(PRICE)
 

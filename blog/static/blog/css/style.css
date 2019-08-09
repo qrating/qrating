@@ -5,3 +5,7 @@ button.navbar-toggler:focus{
 .navbar-dark .navbar-toggler{
     border: none;
 }
+
+.total{
+    display: flex;
+}
