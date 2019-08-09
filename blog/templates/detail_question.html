@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>question deltails</h1>
-
-<div>
+<style>
+        .form-group{
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;    
+        }
+        .fileclass{
+            border-style: none;
+        }
+        </style>
+<div class='text-center'>
     <h1>질문</h1>
     {% if user == question.author %}
     <a href="{% url 'question_update' pk=question.pk %}">수정하기</a>
@@ -22,16 +31,20 @@
 
 
 <div>
-    <h1>새 답변 작성</h1>
-    <form method="POST" class="post-form" enctype="multipart/form-data"> 
+    <form method="POST" class="text-center" enctype="multipart/form-data"> 
+        <h1>새 답변 작성</h1> 
         {% csrf_token %}
-        {{ form.as_p }}
-        {{ image_formset.as_p }}
+        <div class='form-group'>
+        {{ form.label }}
+        {{form}}
+        {{ image_formset.label }}
+        {{ image_formset }}
+    </div>
         <button type="submit">올리기</button>
     </form>
 </div>
-
-<div>
+<hr>
+<div class='text-center'>
     <h1>답변 리스트</h1>
     <div>
         {% for answer, profile in answers_profile %}
