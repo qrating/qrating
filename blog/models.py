@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFill
 
+from taggit.managers import TaggableManager
+from taggit.models import TagBase, TaggedItemBase
+
 PRICE = [(i,i*500+500) for i in range(10)]
 DICT_PRICE = dict(PRICE)
 
@@ -19,6 +22,7 @@ class Question(models.Model):
     price = models.IntegerField(choices=PRICE)
     selected = models.BooleanField(default=False)
 
+    tags = models.ManyToManyField('Tag', blank  = True)
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -45,3 +49,7 @@ class AnswerImage(models.Model):
         format = 'JPEG',
         #option = {'quality':90},
     )
+
+class Tag(models.Model):
+    name = models.CharField(max_length = 100)
+    num = models.IntegerField(default=0)
