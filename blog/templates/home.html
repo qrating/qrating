@@ -3,19 +3,9 @@
 {% block content %}
 <div class="total">
     <div class="left">카테고리 넣는칸</div>
-    <div class="middle">배너랑 질문들</div>
-    <div class="right">아직안정했지만 랭크들!</div>
-</div>
-<div class="">
-    <h1>
-        <a href="{% url 'create_question' %}">새 질문 작성</a>
-    </h1>
-</div>
-
-
-<div>
-    <h1>채택된 질문 리스트</h1>
-    {% for question in questions %}
+    <div class="middle">
+        <h1>채택된 질문 리스트</h1>
+        {% for question in questions %}
         <div>
             <p> {{ question.title }} </p>
             <p> {{ question.author }} </p>
@@ -23,8 +13,17 @@
             <a href="{% url 'detail_question' question.pk %}">질문보기</a>
             <hr>
         </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="right">
+        <h1>
+            <a href="{% url 'create_question' %}">새 질문 작성</a>
+        </h1>
+    </div>
 </div>
+
+    
+
 
 {% endblock %}    
  

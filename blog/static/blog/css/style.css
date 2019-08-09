@@ -8,23 +8,25 @@ button.navbar-toggler:focus{
 
 .total{
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
+    justify-content: center;
 }
 
 .left{
-    background-color : purple;
-    width : 150px;
+    background-color : gray;
+    width : 230px;
     height : 700px;
+    margin-right: 20px;
+
 }
 .right{
-    background-color : pink;
-    width : 200px;
+    background-color : gray;
+    width : 300px;
     height : 700px;
+    
 }
 .middle{
-    background-color : yellow;
+    background-color : white;
     height : 700px;
-    width : 500px;
-
+    width : 700px;
+    margin-right: 20px;
 }
