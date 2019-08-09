@@ -1,18 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>create a question</h1>
+<style>
+.form-group{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;    
+}
+.fileclass{
+    border-style: none;
+}
+</style>
+{% if user.is_authenticated %}
 
 <div>
-    <h1>새 질문 작성</h1>
-    <form method="POST" class="post-form" enctype="multipart/form-data"> 
+    
+    <form method="POST" class="text-center" enctype="multipart/form-data"> 
         {%csrf_token%}
-        {{ form.as_p }}
-        <p> 보유 코인 : {{ coin }}</p>
-        {{ image_formset.as_p }}
-        {{ tag_form.as_p }}
+       <div class='form-group'>
+            <h1>새 질문 작성</h1>
+        {% for field in form %}
+           {{ field.label }}
+           {{field}}
+           {% endfor %}
+           {{coin.label}}
+           {{coin}}    
+           <hr>
+            {% for field in image_formset %}
+            {{field.label}}
+            {{field}}
+            <br>
+            <hr>
+            {%endfor%}
+        </div>
+      
+       
+        {{ tag_form.label }}
+        {{ tag_form}}
         <button type="submit">올리기</button>
     </form>
 </div>
+{% else %}
+<div class ="text-center">
+        <h2>로그인이 필요합니다!</h2>
+        <h4>로그인 혹은 회원가입을 하시려면 </h4>
+        <h4>우측 상단의 로그인 버튼을 눌러주세요</h4>
+    </div>
+{% endif %}
 
 {% endblock %}

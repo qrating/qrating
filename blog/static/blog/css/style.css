@@ -31,3 +31,14 @@ button.navbar-toggler:focus{
     width : 700px;
     margin-right: 20px;
 }
+#menu li{
+    list-style: none;
+    background-color:none;
+}
+#menu{
+    cursor: pointer;
+}
+#menu li a{
+    background-color: #df4040;
+    color: white;
+}

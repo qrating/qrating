@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
-    <h1>검색된 질문 리스트</h1>
+<style>
+.text-center{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;    
+}
+</style>
+<div class = 'text-center'>
+    <h2>검색된 질문 리스트</h2>
     {% for question in questions %}
         <div>
             <p> {{ question.title}} </p>
