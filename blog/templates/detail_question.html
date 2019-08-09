@@ -1,5 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>question deltails</h1>
-<a href="{% url 'home' %}">홈으로</a>
+
 <div>
     <h1>질문</h1>
     {% if user == question.author %}
@@ -56,3 +59,4 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
