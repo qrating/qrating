@@ -34,10 +34,6 @@ urlpatterns = [
     path('select/<int:qpk>/<int:apk>', views.select_question, name='select_question'),
     path('answer_remove/<int:qpk>/<int:apk>',views.answer_remove, name='answer_remove'),
     path('answer_update/<int:qpk>/<int:apk>',views.answer_update, name='answer_update'),
-<<<<<<< HEAD
-=======
-    #path('',views.guide, name='guide'),
->>>>>>> 1d5e88cc29b7b5e1e8cb8698057b8696a767c71c
     path('search', views.search, name='search'),
 
     # accounts
