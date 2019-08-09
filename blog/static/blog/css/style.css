@@ -9,3 +9,20 @@ button.navbar-toggler:focus{
 .total{
     display: flex;
 }
+
+.left{
+    background-color : purple;
+    width : 150px;
+    height : 700px;
+}
+.right{
+    background-color : pink;
+    width : 200px;
+    height : 700px;
+}
+.middle{
+    background-color : yellow;
+    height : 700px;
+    width : 500px;
+
+}
