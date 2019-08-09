@@ -12,25 +12,28 @@ button.navbar-toggler:focus{
 }
 
 .left{
-    background-color : gray;
+    background-color : white;
     width : 230px;
     height : 700px;
     margin-right: 20px;
+    padding-right: 10px;
+    margin-top: 40px;
     
-
 }
 .right{
-    background-color : gray;
+    background-color : white;
     width : 300px;
     height : 700px;
+    margin-top: 40px;
     
 }
 .middle{
-    background-color : white;
+    background-color : #FAFAFA;
     height : 700px;
     width : 700px;
     margin-right: 20px;
     margin-left: 20px;
+    margin-top: 40px;
 }
 #menu li{
     list-style: none;
@@ -42,4 +45,5 @@ button.navbar-toggler:focus{
 #menu li a{
     background-color: #df4040;
     color: white;
+    margin-bottom: 5px;
 }
