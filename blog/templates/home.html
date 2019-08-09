@@ -31,7 +31,7 @@
             <p>{{ question.content}}</p>
             <p> {{ question.body|linebreaks }} </p>
             <div style='text-align: left'>
-                    <button onclick="setTimeout(function(){location.href='{% url 'detail_question' question.pk %}';},500);" type="button" class="btn btn-primary">질문보기</button>
+                    <button onclick="setTimeout(function(){location.href='{% url 'detail_question' question.pk %}';},500);" type="button" class="btn btn-primary">질문보기</button> 
         
         </div>
             <hr>
