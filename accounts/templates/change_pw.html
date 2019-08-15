@@ -4,7 +4,7 @@
                 {{error}}
             </div>
             <div class="login_title">
-                Change Password
+                비밀번호 변경
             </div>
             <form method="POST" action="{% url 'change_pw' user.pk %}" class="login_form">
                 {% csrf_token %}

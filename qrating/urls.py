@@ -45,5 +45,6 @@ urlpatterns = [
     path('change_pw/<int:pk>', accounts_views.change_pw, name='change_pw'),
     path('send_email/<int:pk>', accounts_views.send_email, name='send_email'),
     path('activate/<uid64>/<token>', accounts_views.activate, name='activate'),
+    path('change_info/<int:pk>', accounts_views.change_info, name='change_info'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

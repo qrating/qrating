@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from .models import Profile
 from django.contrib.auth import password_validation
 
@@ -46,3 +46,8 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = ['nickname',]

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="info_container">
+        <div class="info_title">
+            회원정보 변경
+        </div>
+        <form method="POST" action="{% url 'change_info' user.pk %}" class="info_form">
+            {% csrf_token %}
+            <div class="info_input_container">
+                <div class="username_form_text">닉네임</div>
+                <div class="input_container">
+                    <input class="info_input" name="new_nickname" type="text">
+                </div>
+            </div>
+            <div class="info_btn_container">
+                <input type="submit" class="info_btn" value="저장">
+            </div>
+    </div>
+    </form>
+</div>
