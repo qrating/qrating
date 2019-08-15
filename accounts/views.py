@@ -139,17 +139,17 @@ def change_info(request,pk):
         user_change_form = CustomUserChangeForm(data=request.POST, instance=request.user)
         new_nickname = request.POST.get("new_nickname")
 
-        if user_change_form.is_valid() and not User.objects.filter(nickname=new_nickname).exists():
+        if user_change_form.is_valid() and not Profile.objects.filter(nickname=new_nickname).exists():
         #user = user_change_form.save()
             user.nickname = new_nickname
             user.save()
-            return render(request,'mypage.html')
-
-        elif User.objects.filter(nickname=new_nickname).exists():
+            return render(request, 'mypage.html', pk=pk)
+        
+        elif Profile.objects.filter(nickname=new_nickname).exists():
             return HttpResponse('%s은 중복된 닉네임입니다.' % (new_nickname))
         else:
             return HttpResponse('잘못된 접근방식입니다.')
-
+        
     else:
         # 마이페이지에서 이동
         user_change_form = CustomUserChangeForm(instance=request.user)
