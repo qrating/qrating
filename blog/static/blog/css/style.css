@@ -47,3 +47,8 @@ button.navbar-toggler:focus{
     color: white;
     margin-bottom: 5px;
 }
+
+.sticky-top {
+    position: fixed;
+    top: 0px;
+  }
