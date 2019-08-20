@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, authenticate as auth_authenticate, logout as auth_logout
 from django.http import HttpResponse
 
-from .forms import UserRegsiterForm, ProfileRegsiterForm, LoginForm
+from .forms import UserRegsiterForm, ProfileRegsiterForm, LoginForm, CustomUserChangeForm
 from .models import Profile
 from blog.models import Question, Answer
 from django.contrib.auth.models import User
@@ -129,4 +129,32 @@ def change_pw(request, pk):
     else:
         context.update({'error':"현재 비밀번호가 일치하지 않습니다."})
 
-    return render(request, 'change_pw.html',context)
+    return render('change_pw.html',context)
+
+def change_info(request,pk):
+    user = User.objects.get(pk = pk)
+
+    if request.method == "POST":
+    	# 회원정보 변경 페이지에서
+        user_change_form = CustomUserChangeForm(data=request.POST, instance=request.user)
+        new_nickname = request.POST.get("new_nickname")
+
+        if user_change_form.is_valid() and not Profile.objects.filter(nickname=new_nickname).exists():
+        #user = user_change_form.save()
+            user.nickname = new_nickname
+            user.save()
+            return render(request, 'mypage.html', pk=pk)
+        
+        elif Profile.objects.filter(nickname=new_nickname).exists():
+            return HttpResponse('%s은 중복된 닉네임입니다.' % (new_nickname))
+        else:
+            return HttpResponse('잘못된 접근방식입니다.')
+        
+    else:
+        # 마이페이지에서 이동
+        user_change_form = CustomUserChangeForm(instance=request.user)
+
+        context = {
+            'user_change_form': user_change_form,
+        }
+        return render(request, 'change_info.html', context)

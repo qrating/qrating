@@ -1,29 +1,35 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from .models import Profile
+from django.contrib.auth import password_validation
 
 class UserRegsiterForm(UserCreationForm):
+    
+    password1 = forms.CharField(
+        label="비밀번호",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label="비밀번호 확인",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        strip=False,
+        help_text="Enter the same password as before, for verification.",
+    )
+    
     class Meta:
         model = User
         fields = ['username', 'email', 'password1','password2']
         widgets = {
             'username': forms.TextInput(attrs={'maxlength':'15', 'class': 'form-control', 'placeholder':'15자 이내로 입력 가능합니다.'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'password1' : forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'})),
-            'password2' : forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'})),
         }
         labels = {
             'username': '아이디',
-            'email': '이메일',
-            'password1': '패스워드',
-            'password2': '패스워드 확인',
-            
+            'email': '이메일',         
         }
-        def __init__(self, *args, **kwargs):
-            super(UserRegisterForm, self).__init__( *args, **kwargs)
-            self.fields['username'].widget.attrs['maxlength'] = 15
-
     
 class ProfileRegsiterForm(forms.ModelForm):
     class Meta:
@@ -40,3 +46,8 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = ['nickname',]

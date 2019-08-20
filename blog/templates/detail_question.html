@@ -29,7 +29,7 @@
 </div>
 
 
-
+{% if user.is_authenticated %}
 <div>
     <form method="POST" class="text-center" enctype="multipart/form-data"> 
         <h1>새 답변 작성</h1> 
@@ -37,12 +37,19 @@
         <div class='form-group'>
         {{ form.label }}
         {{form}}
-        {{ image_formset.label }}
-        {{ image_formset }}
+        {% for img in image_formset %}
+        {{ img.label }}
+        {{ img }}<br>
+        {% endfor %}
     </div>
         <button type="submit">올리기</button>
     </form>
 </div>
+{% else %}
+<div class = 'text-center'>
+    <h1>답변을 위해서는 로그인이 필요합니다!</h1>
+</div>
+{% endif %}
 <hr>
 <div class='text-center'>
     <h1>답변 리스트</h1>

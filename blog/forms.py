@@ -55,5 +55,8 @@ class AnswerImageForm(forms.ModelForm):
 AnswerImageFormSet = forms.inlineformset_factory(Answer, AnswerImage, form=AnswerImageForm, extra=3)
 
 class TagForm(forms.Form):
-    string = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': '콤마(,) 또는 띄어쓰기로 태그를 구분해 주세요'}))
-    string.widget.attrs.update({'label':'태그'})
+    string = forms.CharField(
+        label="태그",
+        max_length=100, 
+        widget=forms.TextInput(attrs={'placeholder': '콤마(,) 또는 띄어쓰기로 태그를 구분해 주세요'}),
+        )

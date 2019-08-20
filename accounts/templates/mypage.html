@@ -5,6 +5,7 @@
 <p>이메일 : {{ user.email }}</p>
 <p>코인 : {{ profile.coin }}</p>
 
+<a href="{% url 'change_info' user.pk %}">개인정보 변경</a>
 <a href="{% url 'change_pw' user.pk %}">비밀번호 변경</a>
 
 <div>
