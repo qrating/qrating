@@ -136,25 +136,20 @@ def change_info(request,pk):
 
     if request.method == "POST":
     	# 회원정보 변경 페이지에서
-        user_change_form = CustomUserChangeForm(data=request.POST, instance=request.user)
-        new_nickname = request.POST.get("new_nickname")
-
-        if user_change_form.is_valid() and not Profile.objects.filter(nickname=new_nickname).exists():
-        #user = user_change_form.save()
-            user.nickname = new_nickname
-            user.save()
-            return render(request, 'mypage.html', pk=pk)
+        user_change_form = CustomUserChangeForm(request.POST)
+        new_nickname = user_change_form['nickname'].value()
         
-        elif Profile.objects.filter(nickname=new_nickname).exists():
-            return HttpResponse('%s은 중복된 닉네임입니다.' % (new_nickname))
+        if user_change_form.is_valid():
+            profile = get_object_or_404(Profile, user=user)
+            profile.nickname = new_nickname
+            profile.save()
+            return redirect('mypage', pk)        
         else:
-            return HttpResponse('잘못된 접근방식입니다.')
-        
+            return HttpResponse('잘못된 접근방식입니다.')        
     else:
         # 마이페이지에서 이동
-        user_change_form = CustomUserChangeForm(instance=request.user)
+        user_change_form = CustomUserChangeForm()
 
-        context = {
+        return render(request, 'change_info.html',  {
             'user_change_form': user_change_form,
-        }
-        return render(request, 'change_info.html', context)
+        })
