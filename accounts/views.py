@@ -15,6 +15,10 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_text
 
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 # Create your views here.
 def register(request):
     if request.method == 'POST':
@@ -112,24 +116,20 @@ def mypage(request, pk):
         return HttpResponse('본인이 아닙니다.')
 
 def change_pw(request, pk):
-    context= {}
-    if request.method == "POST":
-        current_password = request.POST.get("origin_password")
-        user = request.user
-        if check_password(current_password,user.password):
-            new_password = request.POST.get("password1")
-            password_confirm = request.POST.get("password2")
-            if new_password == password_confirm:
-                user.set_password(new_password)
-                user.save()
-                auth_login(request,user)
-                return redirect('home')
-            else:
-                context.update({'error':"새로운 비밀번호를 다시 확인해주세요."})
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('mypage',pk)
+        else:
+            messages.error(request, 'Please correct the error below.')
     else:
-        context.update({'error':"현재 비밀번호가 일치하지 않습니다."})
-
-    return render('change_pw.html',context)
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_pw.html', {
+        'form': form
+    })
 
 def change_info(request,pk):
     user = User.objects.get(pk = pk)
