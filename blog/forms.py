@@ -7,7 +7,7 @@ DICT_PRICE = dict(PRICE)
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['title','content','price',]
+        fields = ['title','content','price','category',]
         widgets={
             'title': forms.TextInput(attrs={'class':'form-control'}),
             'content': forms.Textarea(attrs={'class':'form-control', 'placeholder':'화이팅><'}),
@@ -16,7 +16,8 @@ class QuestionForm(forms.ModelForm):
         labels={
             'title': '제목',
             'content': '내용',
-            'price' : '코인'
+            'price' : '코인',
+            'category' : '카테고리',
         }
 
 class AnswerForm(forms.ModelForm):

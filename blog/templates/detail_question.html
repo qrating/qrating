@@ -18,6 +18,7 @@
     <a href="{% url 'question_update' pk=question.pk %}">수정하기</a>
     <a href="{% url 'question_remove' pk=question.pk %}">삭제하기</a>
     {% endif %}
+    <p> {{ question.category }} </p>
     <p> {{ question.title }} </p>
     <!--<p> {{ question.author }} </p>-->
     <p> {{ question_nickname }}</p>
