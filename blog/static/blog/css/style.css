@@ -9,6 +9,7 @@ button.navbar-toggler:focus{
 .total{
     display: flex;
     justify-content: center;
+    margin-top: 50px;
 }
 
 .left{
@@ -48,7 +49,8 @@ button.navbar-toggler:focus{
     margin-bottom: 5px;
 }
 
-.sticky-top {
+.header.sticky-top{
     position: fixed;
     top: 0px;
   }
+
