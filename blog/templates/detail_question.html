@@ -21,8 +21,8 @@
     <p> {{ question.title }} </p>
     <!--<p> {{ question.author }} </p>-->
     <p> {{ question_nickname }}</p>
-    {% for image in question.image_set.all %}
-        <img src="{{ question.image.url }}" >
+    {% for image in images %}
+        <img src="{{ image.image.url }}" >
     {% endfor %}
     <p> {{ question.content|linebreaks}} </p>
     <hr>
