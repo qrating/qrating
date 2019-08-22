@@ -1,6 +1,5 @@
 from django import forms
 from .models import Question, Answer, QuestionImage, AnswerImage, PRICE, Tag
-from multiupload.fields import MultiFileField, MultiMediaField, MultiImageField
 
 
 DICT_PRICE = dict(PRICE)
@@ -37,6 +36,3 @@ class TagForm(forms.Form):
         max_length=100, 
         widget=forms.TextInput(attrs={'placeholder': '콤마(,) 또는 띄어쓰기로 태그를 구분해 주세요'}),
         )
-
-class UploadForm(forms.Form):
-    attachments = MultiImageField(min_num=0, max_num=3)
