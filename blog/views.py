@@ -190,7 +190,21 @@ def answer_update(request, qpk, apk):
         form = AnswerForm(instance = answer)
     return render(request, 'detail_question.html',{'form':form})
 
+def cate_search(request, category):
+    questions = Question.objects.filter()
+    
+    if category == 'all' :
+        questions == Question.objects.all()
+    elif category == 'economy' :
+        questions = Question.objects.filter(category=category)
+    elif category == 'programming' :
+        questions = Question.objects.filter(category=category)
+    else :
+        questions = Question.objects.filter(title=category)
+    return render(request, 'search.html', {'questions':questions})
+
 def search(request):
+    
     search_text = request.GET.get('search', 'none')
     print(search_text)
 
