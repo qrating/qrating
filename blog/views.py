@@ -32,7 +32,7 @@ def create_question(request):
         image_formset = QuestionImageFormSet(request.POST, request.FILES)
         price = DICT_PRICE.get(int(question_form['price'].value()))
 
-        if question_form.is_valid() and image_formset.is_valid() and profile.coin >= price:
+        if question_form.is_valid() and profile.coin >= price:
             profile.coin -= price
             profile.save()
 
@@ -57,7 +57,7 @@ def create_question(request):
                         question.tags.add(tag)                
 
                 image_formset.instance = question
-                image_formset.save()               
+                # image_formset.save()               
 
                 return redirect('home')
         else:

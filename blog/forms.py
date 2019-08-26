@@ -10,7 +10,7 @@ class QuestionForm(forms.ModelForm):
         widgets={
             'title': forms.TextInput(attrs={'class':'form-control'}),
             'content': forms.Textarea(attrs={'class':'form-control', 'placeholder':'화이팅><'}),
-            'price' : forms.NumberInput(attrs={'class':'form-control'}),
+            'price' : forms.Select(attrs={'class':'form-control'}),
         }
         labels={
             'title': '제목',
