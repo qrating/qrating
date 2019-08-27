@@ -18,11 +18,12 @@
     <a href="{% url 'question_update' pk=question.pk %}">수정하기</a>
     <a href="{% url 'question_remove' pk=question.pk %}">삭제하기</a>
     {% endif %}
+    <p> {{ question.category }} </p>
     <p> {{ question.title }} </p>
     <!--<p> {{ question.author }} </p>-->
     <p> {{ question_nickname }}</p>
-    {% for image in question.image_set.all %}
-        <img src="{{ question.image.url }}" >
+    {% for image in images %}
+        <img src="{{ image.image.url }}" >
     {% endfor %}
     <p> {{ question.content|linebreaks}} </p>
     <hr>

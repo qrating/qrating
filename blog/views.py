@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 
 from .models import Question, Answer, QuestionImage, AnswerImage, DICT_PRICE, Tag
-from .forms import QuestionForm, AnswerForm, QuestionImageForm, AnswerImageForm, QuestionImageFormSet,AnswerImageFormSet, TagForm
+from .forms import QuestionForm, AnswerForm, TagForm
 from accounts.models import Profile
 
 def home(request):
@@ -29,7 +29,6 @@ def create_question(request):
     if request.method == 'POST':
         question_form = QuestionForm(request.POST)
         tag_form = TagForm(request.POST)
-        image_formset = QuestionImageFormSet(request.POST, request.FILES)
         price = DICT_PRICE.get(int(question_form['price'].value()))
 
         if question_form.is_valid() and profile.coin >= price:
@@ -54,10 +53,16 @@ def create_question(request):
     
                         tag.num += 1
                         tag.save()
-                        question.tags.add(tag)                
+                        question.tags.add(tag)
 
-                image_formset.instance = question
-                # image_formset.save()               
+                for img in request.FILES.getlist('images'):
+                    print(img)
+                    instance = QuestionImage(
+                        question=question,
+                        image = img
+                    )
+                    print(instance)
+                    instance.save()
 
                 return redirect('home')
         else:
@@ -65,14 +70,12 @@ def create_question(request):
 
     else:
         question_form = QuestionForm()
-        image_formset = QuestionImageFormSet()
         tag_form = TagForm()
 
     
     return render(request, 'create_question.html',
         {
-        'form':question_form, 
-        'image_formset':image_formset,
+        'form':question_form,
         'coin':coin,
         'tag_form' : tag_form,
     })
@@ -81,15 +84,15 @@ def create_question(request):
 def detail_question(request, pk):
     question = get_object_or_404(Question, pk=pk)    
     answers = Answer.objects.filter(question = pk)
+    images = QuestionImage.objects.filter(question = pk)
 
     question_profile = get_object_or_404(Profile, user = question.author)
     answers_profile = [get_object_or_404(Profile, user = answer.author) for answer in answers]
 
     if request.method == "POST":
-        answer_form = AnswerForm(request.POST)#, request.FILES)
-        image_formset = AnswerImageFormSet(request.POST, request.FILES)
+        answer_form = AnswerForm(request.POST)
 
-        if answer_form.is_valid() and image_formset.is_valid():
+        if answer_form.is_valid():
             answer = answer_form.save(commit=False)
             answer.question = question
             answer.author = request.user
@@ -99,13 +102,12 @@ def detail_question(request, pk):
             
     elif request.method == "GET":
         answer_form = AnswerForm()
-        image_formset = AnswerImageFormSet()
 
         return render(request, "detail_question.html", 
             {
-                'question' : question, 
-                'form' : answer_form, 
-                'image_formset':image_formset,
+                'question' : question,
+                'images' : images,
+                'form' : answer_form,
                 'question_profile' : question_profile,
                 'answers_profile':zip(answers, answers_profile),
         })
@@ -186,7 +188,21 @@ def answer_update(request, qpk, apk):
         form = AnswerForm(instance = answer)
     return render(request, 'detail_question.html',{'form':form})
 
+def cate_search(request, category):
+    questions = Question.objects.filter()
+    
+    if category == 'all' :
+        questions == Question.objects.all()
+    elif category == 'economy' :
+        questions = Question.objects.filter(category=category)
+    elif category == 'programming' :
+        questions = Question.objects.filter(category=category)
+    else :
+        questions = Question.objects.filter(title=category)
+    return render(request, 'search.html', {'questions':questions})
+
 def search(request):
+    
     search_text = request.GET.get('search', 'none')
     print(search_text)
 

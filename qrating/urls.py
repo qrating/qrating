@@ -35,6 +35,8 @@ urlpatterns = [
     path('answer_remove/<int:qpk>/<int:apk>',views.answer_remove, name='answer_remove'),
     path('answer_update/<int:qpk>/<int:apk>',views.answer_update, name='answer_update'),
     path('search', views.search, name='search'),
+    path('cate_search/<str:category>/', views.cate_search, name="cate_search"),
+ 
     
 
     # accounts

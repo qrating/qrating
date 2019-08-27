@@ -1,12 +1,13 @@
 from django import forms
 from .models import Question, Answer, QuestionImage, AnswerImage, PRICE, Tag
 
+
 DICT_PRICE = dict(PRICE)
 
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['title','content','price',]
+        fields = ['title','content','price','category',]
         widgets={
             'title': forms.TextInput(attrs={'class':'form-control'}),
             'content': forms.Textarea(attrs={'class':'form-control', 'placeholder':'화이팅><'}),
@@ -15,7 +16,8 @@ class QuestionForm(forms.ModelForm):
         labels={
             'title': '제목',
             'content': '내용',
-            'price' : '코인'
+            'price' : '코인',
+            'category' : '카테고리',
         }
 
 class AnswerForm(forms.ModelForm):
@@ -28,31 +30,6 @@ class AnswerForm(forms.ModelForm):
         labels={
             'content':'내용',
         }
-class QuestionImageForm(forms.ModelForm):
-    class Meta:
-        model = QuestionImage
-        fields = ['file',]
-        widgets={
-            'file':forms.FileInput(attrs={'class':'fileclass'}),
-        }
-        labels={
-            'file': '이미지 파일',
-        }
-
-QuestionImageFormSet = forms.inlineformset_factory(Question, QuestionImage, form=QuestionImageForm, extra=3)
-
-class AnswerImageForm(forms.ModelForm):
-    class Meta:
-        model = AnswerImage
-        fields = ['file',]
-        widgets={
-            'file':forms.FileInput(attrs={'class':'fileclass'}),
-        }
-        labels={
-            'file': '이미지 파일',
-        }
-
-AnswerImageFormSet = forms.inlineformset_factory(Answer, AnswerImage, form=AnswerImageForm, extra=3)
 
 class TagForm(forms.Form):
     string = forms.CharField(

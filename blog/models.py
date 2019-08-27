@@ -10,6 +10,15 @@ from imagekit.processors import ResizeToFill
 PRICE = [(i,i*500+500) for i in range(10)]
 DICT_PRICE = dict(PRICE)
 
+CATEGORY_CHOICES = (
+    ('economy','경제학'),
+    ('programming', '프로그래밍'),
+    ('math','수학'),
+    ('management','경영학'),
+    ('cpa','CPA/고시'),
+    ('etc','기타'),
+)
+
 class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -20,6 +29,7 @@ class Question(models.Model):
     selected = models.BooleanField(default=False)
 
     tags = models.ManyToManyField('Tag', blank  = True)
+    category = models.CharField(max_length=15, choices=CATEGORY_CHOICES, default='economy')
 
 class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,21 +41,13 @@ class Answer(models.Model):
 
 class QuestionImage(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    file = ProcessedImageField(
-        upload_to = 'images/',
-        processors = [ResizeToFill(600,600)],
-        format = 'JPEG',
-        #option = {'quality':90},
-    )
+    image = models.ImageField(upload_to="images/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class AnswerImage(models.Model):
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    file = ProcessedImageField(
-        upload_to = 'images/',
-        processors = [ResizeToFill(600,600)],
-        format = 'JPEG',
-        #option = {'quality':90},
-    )
+    answer = models.ForeignKey(Question, on_delete=models.CASCADE)
+    image = models.FileField(upload_to="images/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class Tag(models.Model):
     name = models.CharField(max_length = 100)
