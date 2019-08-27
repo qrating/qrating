@@ -1,25 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% block home %}
 <head> <script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script></head>
 <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
 
+$(".list-group-item ").off("click").on("click", function() {
+
+// test class를 포함하는 DOM 객체가 active class를 포함하면 true 아니면 false를 반환
+
+    if ($(".list-group-item ").hasClass("text-white")) { 
+
+// active class 제거
+
+            $(".list-group-item ").removeClass("text-white");
+            $(".list-group-item ").addClass("text-dark");
+    }
+
+    else {
+
+            // active class 추가
+            $(".list-group-item ").removeClass("text-dark");
+            $(".list-group-item ").addClass("text-white");
+
+    }
+
+});
+
+
+});   
+    </script>
 <div class="total">
+    
     <div class="left">
         <div class="list-group">
             <ul id = "menu">
-                
                 <li><a href="{% url 'cate_search' 'all' %}" class="list-group-item list-group-item-action text-light"><i class="fas fa-border-none fa-2x"></i> &nbsp;모두보기</a></li>
                 <li><a href="{% url 'cate_search' 'economy' %}" class="list-group-item list-group-item-action text-light"><i class="fas fa-chart-area fa-2x"></i>&nbsp;경제학</a></li>
                 <li><a href="{% url 'cate_search' 'programming' %}" class="list-group-item list-group-item-action text-light"><i class="far fa-file-code fa-2x"></i> &nbsp; 프로그래밍</a></li>
-                
-                <li><a href="#" class="list-group-item list-group-item-action text-light"><i class="fas fa-divide fa-2x"></i></i> &nbsp;수학</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action text-light"><i class="fas fa-calculator fa-2x"></i> &nbsp;경영학</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action text-light"><i class="fas fa-book fa-2x"></i> &nbsp;CPA/고시</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action text-light"><i class="fas fa-sticky-note fa-2x"></i> &nbsp;기타</a></li>
+                <li><a href="{% url 'cate_search' 'math' %}" class="list-group-item list-group-item-action text-light"><i class="fas fa-divide fa-2x"></i></i> &nbsp;수학</a></li>
+                <li><a href="{% url 'cate_search' 'management' %}" class="list-group-item list-group-item-action text-light"><i class="fas fa-calculator fa-2x"></i> &nbsp;경영학</a></li>
+                <li><a href="{% url 'cate_search' 'cpa' %}" class="list-group-item list-group-item-action text-light"><i class="fas fa-book fa-2x"></i> &nbsp;CPA/고시</a></li>
+                <li><a href="{% url 'cate_search' 'etc' %}" class="list-group-item list-group-item-action text-light"><i class="fas fa-sticky-note fa-2x"></i> &nbsp;기타</a></li>
             </ul>    
         </div>
     </div>
+    {% endblock %}
     <div class="middle">
         <div class='text-center'>
         <h1><b>채택된 질문 리스트</b></h1>
@@ -33,7 +61,7 @@
             <p>{{ question.content}}</p>
             <p> {{ question.body|linebreaks }} </p>
             <div style='text-align: left'>
-                    <button onclick="setTimeout(function(){location.href='{% url 'detail_question' question.pk %}';},500);" type="button" class="btn btn-primary">질문보기</button> 
+                    <button onclick="setTimeout(function(){location.href='{% url 'detail_question' question.pk %}';},0);" type="button" class="btn btn-primary">질문보기</button> 
         
         </div>
             <hr>

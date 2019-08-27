@@ -197,8 +197,14 @@ def cate_search(request, category):
         questions = Question.objects.filter(category=category)
     elif category == 'programming' :
         questions = Question.objects.filter(category=category)
-    else :
-        questions = Question.objects.filter(title=category)
+    elif category == 'math' :
+        questions = Question.objects.filter(category=category)
+    elif category == 'management' :
+        questions = Question.objects.filter(category=category)
+    elif category == 'cpa' :
+        questions = Question.objects.filter(category=category)
+    elif category == 'etc' :
+        questions = Question.objects.filter(category=category)    
     return render(request, 'search.html', {'questions':questions})
 
 def search(request):
