@@ -1,5 +1,24 @@
+{% extends 'accountsbase.html' %}
+
+{% block content %}
+<div class="text-center">
+    <h1>비밀번호 변경</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit">Save changes</button>
+    {% for f in form %}
+    {% if f.label == "Old password" %}
+    기존 비밀번호 : 
+    {{ f }}<br>
+    {% elif f.label == "New password" %}
+    새 비밀번호 :
+    {{ f }}<br>
+    {% else %}
+    새 비밀번호 확인 :
+    {{ f }}<br>
+    {% endif %}
+    <br>
+    {% endfor %}
+    <button class = "btn btn-dark" type="submit">변경하기</button>
 </form>
+</div>
+{% endblock %}

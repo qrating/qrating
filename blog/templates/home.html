@@ -41,7 +41,7 @@ $(".list-group-item ").off("click").on("click", function() {
                 <li><a href="{% url 'search' %}?cate=economy" class="list-group-item list-group-item-action text-light"><i class="fas fa-chart-area fa-2x"></i>&nbsp;경제학</a></li>
                 <li><a href="{% url 'search' %}?cate=programming" class="list-group-item list-group-item-action text-light"><i class="far fa-file-code fa-2x"></i> &nbsp; 프로그래밍</a></li>
                 <li><a href="{% url 'search' %}?cate=math" class="list-group-item list-group-item-action text-light"><i class="fas fa-divide fa-2x"></i></i> &nbsp;수학</a></li>
-                <li><a href="{% url 'search' %}?cate=management" class="list-group-item list-group-item-action text-light"><i class="fas fa-calculator fa-2x"></i> &nbsp;경영학</a></li>
+                 <li><a href="{% url 'search' %}?cate=management" class="list-group-item list-group-item-action text-light"><i class="fas fa-calculator fa-2x"></i> &nbsp;경영학</a></li>
                 <li><a href="{% url 'search' %}?cate=cpa" class="list-group-item list-group-item-action text-light"><i class="fas fa-book fa-2x"></i> &nbsp;CPA/고시</a></li>
                 <li><a href="{% url 'search' %}?cate=etc" class="list-group-item list-group-item-action text-light"><i class="fas fa-sticky-note fa-2x"></i> &nbsp;기타</a></li>
             </ul>    
@@ -73,24 +73,21 @@ $(".list-group-item ").off("click").on("click", function() {
         <div style='text-align: center'>
         <h1 style="color: aliceblue;">
             Qrating
-        </h1>
-    </div>
-    </div>
-</div>
-
-<div id="tags">
-    <h2>실시간 테그 순위</h2>
-    {% for tag in tags %}
-        <div id="tag">
-            <a href="search?tag={{ tag.name }}">
-                <p> {{ tag.name }} : {{ tag.num }} </p>
-            </a>
+        </h1><br><hr>
+        <div id="tags">
+            <h2>실시간 태그 순위</h2>
+            {% for tag in tags %}
+                <div id="tag">
+                    <a href="search?tag={{ tag.name }}">
+                        <p> {{ tag.name }} : {{ tag.num }} </p>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+        
+    </div>
 </div>
-
-    
-
+</div>
 
 {% endblock %}    
  

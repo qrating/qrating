@@ -1,27 +1,87 @@
-<h1>마이페이지</h1>
+{% extends 'accountsbase.html' %}
 
+{% block content %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        // hide the menu when the page load
+        $("#navbarSupportedContent").hide();
+        // when .menuBtn is clicked, do this
+        $(".navbar-toggler-icon").click(function() {
+            // open the menu with slide effect
+            $("#navbarSupportedContent").slideToggle(300);
+           
+            
+        });
+    });
+    </script>
+
+<header class ='header sticky-top' style="width: 100%;">
+    <nav class="navbar navbar-expand-lg navbar-dark text-white bg-danger">
+        <a class="navbar-brand" href="{% url 'home' %}">QRating</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" id="searchNav">
+                <form id="searchform" method="get" action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
+                    <input name="search" class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search" style="width: 300px;">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">검색</button>
+                </form>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                    <li class="nav-item active">
+                    
+                            <a class="nav-link">이용가이드</a>
+                            
+                            <li class="nav-item active">
+                            <a class="nav-link">알림</a>
+                {% if user.is_authenticated %}
+                <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'mypage' user.pk %}">마이페이지</a>
+                    </li> 
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'logout' %}">로그아웃</a>
+                </li>
+                {% else %} 
+                <li class="nav-item active">
+                        <a class="nav-link" a href="{% url 'login' %}">로그인 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'register' %}">회원가입</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="text-center">
+<h1>마이페이지</h1>
+<div>
 <p>아이디 : {{ user.username }}</p>
 <p>닉네임 : {{ profile.nickname }}</p>
 <p>이메일 : {{ user.email }}</p>
 <p>코인 : {{ profile.coin }}</p>
-
-<a href="{% url 'change_info' user.pk %}">개인정보 변경</a>
-<a href="{% url 'change_pw' user.pk %}">비밀번호 변경</a>
-
-<div>
+</div>
+<a href="{% url 'change_info' user.pk %}"><button class="btn btn-dark">개인정보 변경</button></a>
+<a href="{% url 'change_pw' user.pk %}"><button class="btn btn-dark">비밀번호 변경</button></a>
+</div>
+<hr>
+<div class="text-center">
     <h1>나의 질문 리스트</h1>
     {% for question in questions %}
         <div>
             <p> {{ question.title}} </p>
             <p> {{ question.author}} </p>
             <p> {{ question.body|linebreaks}} </p>
-            <a href="{% url 'detail_question' question.pk %}">질문보기</a>
+            <a href="{% url 'detail_question' question.pk %}"><button class="btn btn-primary">질문보기</button></a>
             <hr>
         </div>
     {% endfor %}
 </div>
 
-<div>
+<div class="text-center">
     <h1>나의 답변 리스트</h1>
     {% for answer in answers %}
         <div>
@@ -32,3 +92,4 @@
         </div>
     {% endfor %}
 </div>
+{% endblock %}

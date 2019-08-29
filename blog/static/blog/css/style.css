@@ -30,12 +30,13 @@ button.navbar-toggler:focus{
 }
 .middle{
     background-color : #FAFAFA;
-    height : 700px;
+    height : 1000px;
     width : 700px;
     margin-right: 20px;
     margin-left: 20px;
     margin-top: 40px;
 }
+
 #menu li{
     list-style: none;
     background-color:none;
