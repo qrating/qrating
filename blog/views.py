@@ -15,11 +15,13 @@ from accounts.models import Profile
 
 def home(request):
     questions = Question.objects.filter()
+    profile = get_object_or_404(Profile, user = request.user)
     tags = Tag.objects.order_by('num')
     print(tags)
     return render(request, 'home.html', {
         'questions':questions,
-        'tags' : tags
+        'tags' : tags,
+        'profile' : profile
         })
 
 def create_question(request):
