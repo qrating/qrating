@@ -61,7 +61,7 @@ $(".list-group-item ").off("click").on("click", function() {
         {% for question in questions %}
         <div>
             <p><b> {{ question.title }}</b> </p>
-            <p><b> {{ question.author }}</b> </p>
+            <p><b> {{ profile.nickname }}</b> </p>
             <p>{{ question.content}}</p>
             <p> {{ question.body|linebreaks }} </p>
             <div style='text-align: left'>
