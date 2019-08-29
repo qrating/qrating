@@ -217,6 +217,7 @@ def search(request):
     search_text = request.GET.get('search', None)
     tag = request.GET.get('tag', None)
     category = request.GET.get('cate', None)
+    is_selected = request.GET.get('selected', None)
 
     if tag != None:
         questions = get_object_or_404(Tag, name = tag).question_set.all()
@@ -228,6 +229,12 @@ def search(request):
 
     if category != 'all' and category != None:
         questions = questions.filter(category=category)
+
+    if is_selected != None:
+        if is_selected == "T" :
+            questions = questions.filter(selected = True)
+        else :
+            questions = questions.filter(selected = False)
 
     return render(request, 'search.html', {
         'questions' : questions
