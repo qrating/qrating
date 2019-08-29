@@ -245,5 +245,6 @@ def search(request):
             questions = questions.filter(selected = False)
 
     return render(request, 'search.html', {
-        'questions' : questions
+        'questions' : questions,
+        'cate' : category
     })
