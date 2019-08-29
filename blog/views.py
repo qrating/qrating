@@ -15,7 +15,12 @@ from accounts.models import Profile
 
 def home(request):
     questions = Question.objects.filter()
-    return render(request, 'home.html',{'questions':questions})
+    tags = Tag.objects.order_by('num')
+    print(tags)
+    return render(request, 'home.html', {
+        'questions':questions,
+        'tags' : tags
+        })
 
 def create_question(request):
     if request.user.is_active == False:
@@ -210,8 +215,15 @@ def cate_search(request, category):
 def search(request):
     
     search_text = request.GET.get('search', 'none')
-    print(search_text)
+    tag = request.GET.get('tag', 'none')
+    
+    if tag == 'none':
+        questions = Question.objects.filter(title__icontains = search_text)
+    else:
+        questions = get_object_or_404(Tag, name = tag).question_set.all()
+    
+    print(questions)
 
     return render(request, 'search.html', {
-        'questions' : Question.objects.filter(title__icontains = search_text)
+        'questions' : questions
     })

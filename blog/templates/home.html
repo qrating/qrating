@@ -78,6 +78,17 @@ $(".list-group-item ").off("click").on("click", function() {
     </div>
 </div>
 
+<div id="tags">
+    <h2>실시간 테그 순위</h2>
+    {% for tag in tags %}
+        <div id="tag">
+            <a href="search?tag={{ tag.name }}">
+                <p> {{ tag.name }} : {{ tag.num }} </p>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
     
 
 
