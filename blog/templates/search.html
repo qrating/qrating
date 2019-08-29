@@ -10,9 +10,15 @@
 }
 </style>
 {% block home %}
+{% if cate %}
 {{ block.super }}
+{% endif %}
 <div class = 'text-center'>
+    {% if cate %}
+    <h1><b>{{ cate }}</b></h1>
+    {% else %}
     <h2>검색된 질문 리스트</h2>
+    {% endif %}
     {% for question in questions %}
         <div>
             <p> {{ question.title}} </p>

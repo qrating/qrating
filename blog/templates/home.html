@@ -47,13 +47,17 @@ $(".list-group-item ").off("click").on("click", function() {
             </ul>    
         </div>
     </div>
-    {% endblock %}
+    
     <div class="middle">
+        <div>
+            <h1>애스킹에서 당신의 학점고민 해결!</h1>
+            <div style="height: 150px;"></div>
+            <div style='text-align: left'>
+                    <button onclick="location.href={% url 'create_question' %} " type="button" class="btn btn-dark">새 질문 작성</button>
+            </div>
+        </div>{% endblock %}
         <div class='text-center'>
         <h1><b>채택된 질문 리스트</b></h1>
-        <div style='text-align: left'>
-                <button onclick="location.href={% url 'create_question' %} " type="button" class="btn btn-dark">새 질문 작성</button>
-        </div>
         {% for question in questions %}
         <div>
             <p><b> {{ question.title }}</b> </p>
