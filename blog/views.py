@@ -125,6 +125,12 @@ def question_remove(request, pk):
         #return redirect('detail_question', pk=pk)
         return HttpResponse('권한 없음')
     else :
+        for tag in question.tags.all():
+            if tag.num == 1:
+                tag.delete()
+            else:
+                tag.num -= 1
+
         question.delete()
         return redirect('home')
 
