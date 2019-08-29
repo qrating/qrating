@@ -54,7 +54,7 @@ $(".list-group-item ").off("click").on("click", function() {
         <div style='text-align: left'>
                 <button onclick="location.href={% url 'create_question' %} " type="button" class="btn btn-dark">새 질문 작성</button>
         </div>
-        {% for question in questions %}
+        {% for question, profile in question_profiles %}
         <div>
             <p><b> {{ question.title }}</b> </p>
             <p><b> {{ profile.nickname }}</b> </p>
