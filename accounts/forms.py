@@ -48,6 +48,9 @@ class LoginForm(AuthenticationForm):
         fields = ['username', 'password']
 
 class CustomUserChangeForm(UserChangeForm):
+    nickname = forms.CharField(
+        label="닉네임",
+        )
     class Meta:
         model = Profile
         fields = ['nickname',]
