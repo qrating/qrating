@@ -214,15 +214,20 @@ def cate_search(request, category):
 
 def search(request):
     
-    search_text = request.GET.get('search', 'none')
-    tag = request.GET.get('tag', 'none')
-    
-    if tag == 'none':
-        questions = Question.objects.filter(title__icontains = search_text)
-    else:
+    search_text = request.GET.get('search', None)
+    tag = request.GET.get('tag', None)
+    category = request.GET.get('cate', None)
+
+    if tag != None:
         questions = get_object_or_404(Tag, name = tag).question_set.all()
-    
-    print(questions)
+    else:
+        questions = Question.objects.all()
+
+    if search_text != None:
+        questions = questions.filter(title__icontains = search_text)    
+
+    if category != 'all' and category != None:
+        questions = questions.filter(category=category)
 
     return render(request, 'search.html', {
         'questions' : questions
