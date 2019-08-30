@@ -67,11 +67,12 @@ $(".list-group-item ").off("click").on("click", function() {
 
         <div>
             <p><b> {{ question.title }}</b> </p>
-            <p>{{ question.price}}</p>
+            <p>{{ question.price}}원</p>
             <p>{{ question.time_created}}</p>
             <p><b> {{ profile.nickname }}</b> </p>
             <!--{{ question.content}}</p>--><p>
             <p> {{ question.body|linebreaks }} </p>
+            <p> 답변 수:{{ question.answer_set.all.count }}</p>
             <p>
                 {% for tag in question.tags.all %}
                     #{{tag.name}}
