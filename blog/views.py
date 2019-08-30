@@ -21,7 +21,7 @@ def home(request):
     print(tags)
     return render(request, 'home.html', {
         'question_profiles': zip(questions, profiles),
-        'tags' : tags
+        'tags' : tags,
         })
 
 def create_question(request):

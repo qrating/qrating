@@ -22,10 +22,17 @@
     <p> {{ question.title }} </p>
     <!--<p> {{ question.author }} </p>-->
     <p> {{ question_profile.nickname }}</p>
+    <p> {{ question.price }}</p>
+    <p> {{ question.time_created }}</p>
     {% for image in images %}
         <img src="{{ image.image.url }}" >
     {% endfor %}
     <p> {{ question.content|linebreaks}} </p>
+    <p>
+        {% for tag in question.tags.all %}
+            #{{tag.name}}
+        {% endfor %}
+    </p>
     <hr>
 </div>
 

@@ -41,7 +41,7 @@ $(".list-group-item ").off("click").on("click", function() {
                 <li><a href="{% url 'search' %}?cate=economy" class="list-group-item list-group-item-action text-light"><i class="fas fa-chart-area fa-2x"></i>&nbsp;경제학</a></li>
                 <li><a href="{% url 'search' %}?cate=programming" class="list-group-item list-group-item-action text-light"><i class="far fa-file-code fa-2x"></i> &nbsp; 프로그래밍</a></li>
                 <li><a href="{% url 'search' %}?cate=math" class="list-group-item list-group-item-action text-light"><i class="fas fa-divide fa-2x"></i></i> &nbsp;수학</a></li>
-                 <li><a href="{% url 'search' %}?cate=management" class="list-group-item list-group-item-action text-light"><i class="fas fa-calculator fa-2x"></i> &nbsp;경영학</a></li>
+                <li><a href="{% url 'search' %}?cate=management" class="list-group-item list-group-item-action text-light"><i class="fas fa-calculator fa-2x"></i> &nbsp;경영학</a></li>
                 <li><a href="{% url 'search' %}?cate=cpa" class="list-group-item list-group-item-action text-light"><i class="fas fa-book fa-2x"></i> &nbsp;CPA/고시</a></li>
                 <li><a href="{% url 'search' %}?cate=etc" class="list-group-item list-group-item-action text-light"><i class="fas fa-sticky-note fa-2x"></i> &nbsp;기타</a></li>
             </ul>    
@@ -67,9 +67,16 @@ $(".list-group-item ").off("click").on("click", function() {
 
         <div>
             <p><b> {{ question.title }}</b> </p>
+            <p>{{ question.price}}</p>
+            <p>{{ question.time_created}}</p>
             <p><b> {{ profile.nickname }}</b> </p>
-            <p>{{ question.content}}</p>
+            <!--{{ question.content}}</p>--><p>
             <p> {{ question.body|linebreaks }} </p>
+            <p>
+                {% for tag in question.tags.all %}
+                    #{{tag.name}}
+                {% endfor %}
+            </p>
             <div style='text-align: left'>
                     <button onclick="setTimeout(function(){location.href='{% url 'detail_question' question.pk %}';},0);" type="button" class="btn btn-primary">질문보기</button> 
         
