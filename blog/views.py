@@ -121,7 +121,11 @@ def detail_question(request, pk):
 
 def question_remove(request, pk):
     question=get_object_or_404(Question, pk=pk)
+    answers = Answer.objects.filter(question = pk)
     
+    if answers.exists():
+        return HttpResponse('답변이 달린 질문은 삭제가 불가능합니다.')
+        
     if request.user != question.author: #and not request.user.is_staff
         #messages.warning(request, '권한 없음')
         #return redirect('detail_question', pk=pk)
@@ -140,6 +144,10 @@ def question_update(request, pk):
     question = get_object_or_404(Question, pk=pk)
     profile = get_object_or_404(Profile, user = request.user)
     coin = profile.coin
+    answers = Answer.objects.filter(question = pk)
+    
+    if answers.exists():
+        return HttpResponse('답변이 달린 질문은 수정이 불가능합니다.')
 
     if request.user != question.author:
         #messages.warning(request, "권한 없음")#외않작동?
@@ -185,6 +193,7 @@ def select_question(request, qpk, apk):
 def answer_remove(request, qpk,apk):
     answer = get_object_or_404(Answer, pk=apk)
     question = get_object_or_404(Question, pk=qpk)
+    
     answer.delete()
     return redirect('detail_question',pk=qpk)
     
