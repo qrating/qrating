@@ -4,9 +4,6 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
-from imagekit.models import ProcessedImageField, ImageSpecField
-from imagekit.processors import ResizeToFill
-
 PRICE = [(i*500+500,i*500+500) for i in range(10)]
 DICT_PRICE = dict(PRICE)
 
